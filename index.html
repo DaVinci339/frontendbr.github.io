@@ -1,97 +1,964 @@
-<!doctype html>
-<html>
-    <head>
-        <meta charset="UTF-8">
-        <title>Front-End Brasil - Portando discussões feitas em grupos (Facebook, Google Groups, Slack, Disqus) para issues.</title>
-        <meta name="description" content="Website da Organização Front-End Brasil">
-        <meta name="keywords" content="front-end, frontend, comunidade, html, css, javascript, brasil">
-        <meta name="viewport" content="width=device-width">
-        <link type="text/plain" rel="author" href="humans.txt" />
-        <link href="//fonts.googleapis.com/css?family=Lato:100,300,400,700" rel="stylesheet" type="text/css">
-        <link rel="stylesheet" href="assets/css/style.css">
-				<script src="assets/Ecmascript/scrolling.js"></script>
-    </head>
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aprendi+ - Estudos com Gamificação</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
 
-    <body>
-        <header class="header">
-            <div class="centered-parent">
-                <div class="centered-child">
-                    <img src="https://avatars0.githubusercontent.com/u/16963863?v=3&s=200.jpg" class="logo" alt="Front-End Brasil">
-                    <h3 class="lead-title">Portando discussões feitas em grupos (Facebook, Google Groups, Slack, Disqus) para issues.</h3>
-                    <nav class="nav-main">
-                        <ul class="nav-list">
-                            <li class="nav-item">
-                                <a class="nav-link btn" onclick="go( `#sobre` ); return false" href="#sobre">Sobre</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link btn" onclick="go( `#estrutura` ); return false" href="#estrutura">Estrutura</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link btn" onclick="go( `#sugestoes` ); return false" href="#sugestoes">Sugestões</a>
-                            </li>
-                        </ul>
-                    </nav>
+        :root {
+            --primary: #6a11cb;
+            --secondary: #2575fc;
+            --accent: #ffcc00;
+            --success: #2ecc71;
+            --warning: #f39c12;
+            --light: #f8f9fa;
+            --text: #333;
+            --text-light: #6c757d;
+        }
+
+        body {
+            background: #f5f7fb;
+            color: var(--text);
+            line-height: 1.6;
+        }
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 15px 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .header-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            font-size: 1.8rem;
+            font-weight: 800;
+            text-decoration: none;
+            color: white;
+        }
+
+        .logo span { color: var(--accent); }
+        .logo i { margin-right: 10px; }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            padding: 6px 16px;
+            border-radius: 30px;
+            transition: 0.2s;
+        }
+
+        nav ul li a:hover,
+        nav ul li a.active { background: rgba(255,255,255,0.15); }
+
+        .user-actions {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .user-points {
+            background: rgba(255,255,255,0.2);
+            padding: 6px 16px;
+            border-radius: 30px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .user-points i { color: var(--accent); }
+
+        .btn {
+            padding: 8px 22px;
+            border-radius: 30px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.2s;
+            text-decoration: none;
+            display: inline-block;
+            border: none;
+        }
+
+        .btn-primary {
+            background: white;
+            color: var(--primary);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 18px rgba(0,0,0,0.15);
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 2px solid white;
+            color: white;
+        }
+
+        .btn-outline:hover {
+            background: white;
+            color: var(--primary);
+        }
+
+        .btn-large { padding: 14px 36px; font-size: 1.1rem; }
+
+        .hero {
+            background: linear-gradient(135deg, rgba(106,17,203,0.92), rgba(37,117,252,0.92));
+            color: white;
+            padding: 80px 20px;
+            text-align: center;
+        }
+
+        .hero h1 { font-size: 2.8rem; margin-bottom: 16px; }
+        .hero p { font-size: 1.2rem; opacity: 0.9; margin-bottom: 28px; }
+
+        .hero-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        .section { padding: 70px 20px; }
+        .section-title { text-align: center; max-width: 700px; margin: 0 auto 50px; }
+        .section-title h2 { font-size: 2.4rem; color: var(--primary); }
+        .section-title p { font-size: 1.1rem; color: var(--text-light); }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .feature-card {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+            transition: transform 0.3s, box-shadow 0.3s;
+            text-align: center;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+        }
+
+        .feature-icon {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            color: white;
+            font-size: 2rem;
+        }
+
+        .feature-card h3 { font-size: 1.5rem; margin-bottom: 15px; color: var(--primary); }
+        .steps {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 30px;
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        .step {
+            background: white;
+            border-radius: 20px;
+            padding: 32px 28px;
+            flex: 1 1 260px;
+            max-width: 340px;
+            text-align: center;
+            box-shadow: 0 8px 28px rgba(0,0,0,0.06);
+            transition: 0.3s;
+        }
+
+        .step:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 16px 40px rgba(106,17,203,0.12);
+        }
+
+        .step-number {
+            width: 56px;
+            height: 56px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 18px;
+            color: white;
+            font-size: 1.6rem;
+            font-weight: 700;
+        }
+
+        .step h3 { font-size: 1.4rem; color: var(--primary); margin-bottom: 10px; }
+        .step p { color: var(--text-light); }
+
+    
+        .highlight-section {
+            background: white;
+            border-radius: 24px;
+            padding: 50px 30px;
+            max-width: 1100px;
+            margin: 0 auto;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.05);
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            align-items: center;
+        }
+
+        .highlight-section h3 { font-size: 2rem; color: var(--primary); margin-bottom: 16px; }
+
+        .highlight-section ul {
+            list-style: none;
+            margin-top: 16px;
+        }
+
+        .highlight-section ul li {
+            padding: 10px 0;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            border-bottom: 1px solid #f0f0f5;
+        }
+
+        .highlight-section ul li:last-child { border-bottom: none; }
+
+        .highlight-section ul li i {
+            width: 32px;
+            height: 32px;
+            background: var(--light);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary);
+        }
+
+        .badge-api {
+            background: var(--accent);
+            color: #1e1e2f;
+            padding: 4px 16px;
+            border-radius: 30px;
+            font-weight: 700;
+            font-size: 0.8rem;
+            display: inline-block;
+        }
+
+        .highlight-image {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: 20px;
+            padding: 40px 30px;
+            color: white;
+            text-align: center;
+        }
+
+        .highlight-image i {
+            font-size: 4.5rem;
+            margin-bottom: 20px;
+            color: var(--accent);
+        }
+
+        .highlight-image .xp-counter {
+            font-size: 2.4rem;
+            font-weight: 800;
+            background: rgba(255,255,255,0.15);
+            padding: 8px 24px;
+            border-radius: 50px;
+            display: inline-block;
+            margin-top: 12px;
+        }
+
+        /* FOOTER */
+        footer {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 40px 20px 20px;
+            margin-top: 30px;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+        }
+
+        .footer-column h3 { margin-bottom: 15px; }
+        .footer-column ul { list-style: none; }
+        .footer-column ul li { margin-bottom: 8px; }
+        .footer-column ul li a {
+            color: rgba(255,255,255,0.8);
+            text-decoration: none;
+        }
+        .footer-column ul li a:hover { color: white; }
+
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 16px;
+        }
+
+        .social-links a {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-decoration: none;
+            transition: 0.2s;
+        }
+
+        .social-links a:hover { background: rgba(255,255,255,0.2); }
+
+        .copyright {
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            color: rgba(255,255,255,0.7);
+        }
+
+        @media (max-width: 768px) {
+            .header-container { flex-direction: column; text-align: center; }
+            .hero h1 { font-size: 2rem; }
+            .highlight-section { grid-template-columns: 1fr; padding: 30px 20px; }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-container">
+            <a href="index.html" class="logo">
+                <i class="fas fa-graduation-cap"></i>
+                Aprendi<span>+</span>
+            </a>
+            <nav>
+                <ul>
+                    <li><a href="index.html" class="active">Início</a></li>
+                    <li><a href="estudos.html">Estudos</a></li>
+                    <li><a href="perfil.html">Perfil</a></li>
+                    <li><a href="contato.html">Contato</a></li>
+                </ul>
+            </nav>
+            <div class="user-actions">
+                <div class="user-points">
+                    <i class="fas fa-coins"></i>
+                    <span id="user-points-header">1.250 XP</span>
+                </div>
+                <a href="entrar.html" class="btn btn-primary">Entrar</a>
+            </div>
+        </div>
+    </header>
+
+    <section class="hero">
+        <h1>🚀 Estude, ganhe XP e evolua</h1>
+        <p>Conteúdo real com API integrada + sistema de gamificação</p>
+        <div class="hero-buttons">
+            <a href="estudos.html" class="btn btn-primary btn-large">
+                <i class="fas fa-rocket"></i> Explorar matérias
+            </a>
+            <a href="#como-funciona" class="btn btn-outline btn-large">
+                Como funciona
+            </a>
+        </div>
+    </section>
+
+    <section class="section" id="features">
+        <div class="section-title">
+            <h2>Recursos que você vai usar</h2>
+            <p>Tudo o que precisa para estudar e ser recompensado</p>
+        </div>
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon"><i class="fas fa-book-open"></i></div>
+                <h3>8 Matérias</h3>
+                <p>Matemática, Português, História, Geografia, Biologia, Física, Química e Inglês</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon"><i class="fas fa-file-alt"></i></div>
+                <h3>Resumos Completos</h3>
+                <p>Conteúdo organizado por nível de dificuldade com palavras-chave</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon"><i class="fas fa-pencil-alt"></i></div>
+                <h3>Exercícios Interativos</h3>
+                <p>Responda e receba feedback imediato com correção automática</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon"><i class="fas fa-star"></i></div>
+                <h3>Sistema de XP</h3>
+                <p>Ganhe pontos ao acertar exercícios e acompanhe seu progresso</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon"><i class="fas fa-search"></i></div>
+                <h3>Busca Inteligente</h3>
+                <p>Encontre conteúdo por palavra-chave em todas as matérias</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon"><i class="fas fa-trophy"></i></div>
+                <h3>Gamificação</h3>
+                <p>Suba de nível, desbloqueie conquistas e acompanhe seu progresso</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="section" id="como-funciona">
+        <div class="section-title">
+            <h2>Como funciona</h2>
+            <p>Três passos simples para começar a estudar</p>
+        </div>
+        <div class="steps">
+            <div class="step">
+                <div class="step-number">1</div>
+                <h3>Escolha uma matéria</h3>
+                <p>Selecione entre 8 disciplinas diferentes</p>
+            </div>
+            <div class="step">
+                <div class="step-number">2</div>
+                <h3>Estude o conteúdo</h3>
+                <p>Leia resumos completos e bem estruturados</p>
+            </div>
+            <div class="step">
+                <div class="step-number">3</div>
+                <h3>Responda e ganhe XP</h3>
+                <p>Acumule pontos, suba de nível e desbloqueie conquistas</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="section" style="padding-top: 0;">
+        <div class="highlight-section">
+            <div>
+                <span class="badge-api"><i class="fas fa-code"></i> API integrada</span>
+                <h3>Conteúdo real, sem firulas</h3>
+                <p style="color: var(--text-light);">
+                    Nosso foco é entregar materiais de estudo funcionais, com dados vindos de uma API educacional.
+                    Nada de promessas vazias — só o que você precisa para aprender e ser recompensado.
+                </p>
+                <ul>
+                    <li><i class="fas fa-check-circle"></i> Resumos e exercícios por matéria</li>
+                    <li><i class="fas fa-check-circle"></i> Sistema de XP e níveis</li>
+                    <li><i class="fas fa-check-circle"></i> Progresso salvo no seu perfil</li>
+                    <li><i class="fas fa-check-circle"></i> Totalmente funcional para a feira de tecnologia</li>
+                </ul>
+            </div>
+            <div class="highlight-image">
+                <i class="fas fa-trophy"></i>
+                <h4>Gamificação ativa</h4>
+                <p style="opacity: 0.85;">Complete desafios e veja seu progresso</p>
+                <div class="xp-counter">
+                    <i class="fas fa-star" style="color: var(--accent);"></i> 1.250 XP
+                </div>
+                <div style="margin-top: 20px; background: rgba(255,255,255,0.1); border-radius: 30px; padding: 8px 16px; display: inline-block;">
+                    Nível 15 · Próximo: 2.000 XP
                 </div>
             </div>
-        </header>
-        <main class="content">
+        </div>
+    </section>
 
-            <!-- Sobre -->
-            <section class="section" id="sobre">
-                <h2 class="title">Sobre</h2>
-                <p><strong>Olá, seja bem-vindo!</strong></p>
-                <p>Alguns posts em grupos de front-end em redes sociais geram bastante conteúdo bacana que poderia ser disponibilizado de forma mais fácil.</p>
-                <p>A busca do Facebook em grupos, por exemplo, tem vários problemas. Discussões épicas foram perdidas, e pessoas que ingressam agora nos grupos não tem mais acesso a esses posts.</p>
-                <p>A ideia desse repositório é portar ou iniciar essas discussões nas issues. Estando no Github, fica mais fácil procurar respostas a perguntas já respondidas por esses grupos.</p>
-                <p>O objetivo maior é unificar todas as discussões em um só local e o Github foi o escolhido para isso.</p>
-            </section>
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3><i class="fas fa-graduation-cap"></i> Aprendi+</h3>
+                <p>Plataforma de estudos com API e gamificação — projeto para feira de tecnologia.</p>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-github"></i></a>
+                    <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="#"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+            <div class="footer-column">
+                <h3>Navegação</h3>
+                <ul>
+                    <li><a href="index.html">Início</a></li>
+                    <li><a href="estudos.html">Estudos</a></li>
+                    <li><a href="perfil.html">Perfil</a></li>
+                    <li><a href="entrar.html">Entrar</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Matérias</h3>
+                <ul>
+                    <li><a href="estudos.html">Matemática</a></li>
+                    <li><a href="estudos.html">Português</a></li>
+                    <li><a href="estudos.html">História</a></li>
+                    <li><a href="estudos.html">Biologia</a></li>
+                    <li><a href="estudos.html">Física</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Contato</h3>
+                <ul>
+                    <li><i class="fas fa-map-marker-alt" style="width: 20px;"></i> São Paulo, SP</li>
+                    <li><i class="fas fa-envelope" style="width: 20px;"></i> contato@aprendi.com</li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2025 Aprendi+ • Feito com foco em API e gamificação</p>
+        </div>
+    </footer>
 
-            <!-- Estrutura -->
-            <section class="section" id="estrutura">
-                <h2 class="title">Estrutura</h2>
-                <nav class="nav-structure">
-                    <ul class="nav-list">
-                        <li class="nav-item">
-                            <a class="nav-link btn" href="https://frontendbr.com.br/eventos" target="_blank">Eventos</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link btn" href="https://github.com/frontendbr/forum" target="_blank">Fórum</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link btn" href="https://github.com/frontendbr/me-contrata" target="_blank">Me Contrata</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link btn" href="https://github.com/frontendbr/open-source" target="_blank">Open Source</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link btn" href="https://github.com/frontendbr/poste-mais" target="_blank">Poste Mais</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link btn" href="https://github.com/frontendbr/sugestoes" target="_blank">Sugestões</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link btn" href="https://github.com/frontendbr/vagas" target="_blank">Vagas</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link btn" href="https://survey.frontendbr.com.br" target="_blank">Survey</a>
-                        </li>
-                    </ul>
-                </nav>
+    <script>
+        // ===== API DE ESTUDOS =====
+        const API = {
+            data: {
+                materias: {
+                    matematica: {
+                        id: 'matematica',
+                        nome: 'Matemática',
+                        icone: 'fa-square-root-alt',
+                        cor: '#6a11cb',
+                        resumos: [
+                            {
+                                id: 'm1',
+                                titulo: 'Álgebra - Conceitos Fundamentais',
+                                conteudo: 'A álgebra é a área da matemática que estuda as operações com números, letras e símbolos. Principais tópicos: expressões algébricas, equações do 1º e 2º grau, sistemas lineares e produtos notáveis.',
+                                palavrasChave: ['equações', 'variáveis', 'expressões'],
+                                nivel: 'básico'
+                            },
+                            {
+                                id: 'm2',
+                                titulo: 'Geometria Plana - Figuras e Áreas',
+                                conteudo: 'A geometria plana estuda as figuras em duas dimensões. Conceitos fundamentais: ponto, reta, plano, ângulos, polígonos (triângulos, quadriláteros, círculo) e cálculo de áreas e perímetros.',
+                                palavrasChave: ['triângulos', 'círculo', 'área', 'perímetro'],
+                                nivel: 'intermediário'
+                            },
+                            {
+                                id: 'm3',
+                                titulo: 'Trigonometria - Seno, Cosseno e Tangente',
+                                conteudo: 'A trigonometria estuda as relações entre os ângulos e lados dos triângulos. Funções trigonométricas: seno (sen), cosseno (cos) e tangente (tan). Aplicações em triângulos retângulos e ciclo trigonométrico.',
+                                palavrasChave: ['seno', 'cosseno', 'tangente', 'ângulos'],
+                                nivel: 'avançado'
+                            }
+                        ],
+                        exercicios: [
+                            {
+                                id: 'e1',
+                                pergunta: 'Qual o valor de x na equação 3x + 7 = 22?',
+                                alternativas: ['x = 3', 'x = 5', 'x = 7', 'x = 9'],
+                                correta: 1,
+                                nivel: 'básico',
+                                pontos: 10
+                            },
+                            {
+                                id: 'e2',
+                                pergunta: 'Qual a área de um triângulo com base 8cm e altura 5cm?',
+                                alternativas: ['20cm²', '40cm²', '13cm²', '30cm²'],
+                                correta: 0,
+                                nivel: 'básico',
+                                pontos: 10
+                            },
+                            {
+                                id: 'e3',
+                                pergunta: 'Qual o valor de sen(30°)?',
+                                alternativas: ['1/2', '√3/2', '√2/2', '1'],
+                                correta: 0,
+                                nivel: 'intermediário',
+                                pontos: 15
+                            }
+                        ]
+                    },
+                    portugues: {
+                        id: 'portugues',
+                        nome: 'Português',
+                        icone: 'fa-book',
+                        cor: '#2575fc',
+                        resumos: [
+                            {
+                                id: 'p1',
+                                titulo: 'Gramática - Classes de Palavras',
+                                conteudo: 'As classes de palavras (classes gramaticais) são: substantivo, adjetivo, artigo, numeral, pronome, verbo, advérbio, preposição, conjunção e interjeição. Cada uma tem função específica na construção das frases.',
+                                palavrasChave: ['substantivo', 'verbo', 'advérbio', 'classes'],
+                                nivel: 'básico'
+                            },
+                            {
+                                id: 'p2',
+                                titulo: 'Figuras de Linguagem - Principais Tipos',
+                                conteudo: 'Figuras de linguagem são recursos estilísticos que tornam a mensagem mais expressiva. Principais: metáfora, comparação, personificação, hipérbole, eufemismo, ironia e antítese.',
+                                palavrasChave: ['metáfora', 'hipérbole', 'ironia'],
+                                nivel: 'intermediário'
+                            }
+                        ],
+                        exercicios: [
+                            {
+                                id: 'e5',
+                                pergunta: 'Qual a classe gramatical da palavra "felizmente"?',
+                                alternativas: ['Adjetivo', 'Advérbio', 'Substantivo', 'Verbo'],
+                                correta: 1,
+                                nivel: 'básico',
+                                pontos: 10
+                            },
+                            {
+                                id: 'e6',
+                                pergunta: 'Qual figura de linguagem está presente em "O tempo é um rio que corre"?',
+                                alternativas: ['Metáfora', 'Comparação', 'Personificação', 'Hipérbole'],
+                                correta: 0,
+                                nivel: 'intermediário',
+                                pontos: 15
+                            }
+                        ]
+                    },
+                    historia: {
+                        id: 'historia',
+                        nome: 'História',
+                        icone: 'fa-landmark',
+                        cor: '#f39c12',
+                        resumos: [
+                            {
+                                id: 'h1',
+                                titulo: 'Brasil Colônia - Economia e Sociedade',
+                                conteudo: 'O período colonial brasileiro (1500-1822) foi marcado pela economia açucareira no Nordeste, mineração em Minas Gerais e pecuária no Sul.',
+                                palavrasChave: ['açúcar', 'mineração', 'escravidão'],
+                                nivel: 'básico'
+                            },
+                            {
+                                id: 'h2',
+                                titulo: 'Idade Média - Feudalismo',
+                                conteudo: 'O feudalismo (séc. V-XV) foi o sistema social, político e econômico da Europa medieval. Baseado em: feudo (terra), suserania e vassalagem, trabalho servil.',
+                                palavrasChave: ['feudo', 'suserania', 'servidão'],
+                                nivel: 'intermediário'
+                            }
+                        ],
+                        exercicios: [
+                            {
+                                id: 'e9',
+                                pergunta: 'Qual atividade econômica foi a base do Brasil Colônia no século XVI?',
+                                alternativas: ['Mineração', 'Cana-de-açúcar', 'Café', 'Pecuária'],
+                                correta: 1,
+                                nivel: 'básico',
+                                pontos: 10
+                            },
+                            {
+                                id: 'e10',
+                                pergunta: 'O que era o feudo na Idade Média?',
+                                alternativas: ['Uma moeda', 'Uma terra', 'Um exército', 'Uma religião'],
+                                correta: 1,
+                                nivel: 'intermediário',
+                                pontos: 15
+                            }
+                        ]
+                    },
+                    geografia: {
+                        id: 'geografia',
+                        nome: 'Geografia',
+                        icone: 'fa-globe-americas',
+                        cor: '#2ecc71',
+                        resumos: [
+                            {
+                                id: 'g1',
+                                titulo: 'Cartografia - Projeções e Escalas',
+                                conteudo: 'A cartografia é a ciência dos mapas. Projeções: cilíndrica (Mercator), cônica e azimutal. Escala: relação entre distância no mapa e distância real.',
+                                palavrasChave: ['projeções', 'escala', 'mapa'],
+                                nivel: 'básico'
+                            },
+                            {
+                                id: 'g2',
+                                titulo: 'Climatologia - Tipos de Clima',
+                                conteudo: 'Clima é a média das condições atmosféricas de uma região. Principais tipos: equatorial, tropical, temperado, desértico, polar e mediterrâneo.',
+                                palavrasChave: ['equatorial', 'tropical', 'temperado'],
+                                nivel: 'intermediário'
+                            }
+                        ],
+                        exercicios: [
+                            {
+                                id: 'e13',
+                                pergunta: 'Qual o tipo de projeção mais comum em mapas mundiais?',
+                                alternativas: ['Cônica', 'Cilíndrica', 'Azimutal', 'Polar'],
+                                correta: 1,
+                                nivel: 'básico',
+                                pontos: 10
+                            },
+                            {
+                                id: 'e14',
+                                pergunta: 'Qual clima predomina na Amazônia?',
+                                alternativas: ['Tropical', 'Equatorial', 'Desértico', 'Temperado'],
+                                correta: 1,
+                                nivel: 'intermediário',
+                                pontos: 15
+                            }
+                        ]
+                    },
+                    biologia: {
+                        id: 'biologia',
+                        nome: 'Biologia',
+                        icone: 'fa-dna',
+                        cor: '#e74c3c',
+                        resumos: [
+                            {
+                                id: 'b1',
+                                titulo: 'Citologia - Células e Organelas',
+                                conteudo: 'A célula é a unidade fundamental da vida. Organelas: membrana plasmática, citoplasma, núcleo, mitocôndria (respiração), ribossomos (síntese proteica), retículo endoplasmático e complexo de Golgi.',
+                                palavrasChave: ['célula', 'mitocôndria', 'núcleo'],
+                                nivel: 'básico'
+                            },
+                            {
+                                id: 'b2',
+                                titulo: 'Genética - Leis de Mendel',
+                                conteudo: 'Gregor Mendel descobriu as leis da hereditariedade. 1ª Lei: Lei da Segregação. 2ª Lei: Lei da Segregação Independente.',
+                                palavrasChave: ['Mendel', 'hereditariedade', 'genes'],
+                                nivel: 'intermediário'
+                            }
+                        ],
+                        exercicios: [
+                            {
+                                id: 'e17',
+                                pergunta: 'Qual organela é responsável pela respiração celular?',
+                                alternativas: ['Ribossomo', 'Mitocôndria', 'Complexo de Golgi', 'Retículo'],
+                                correta: 1,
+                                nivel: 'básico',
+                                pontos: 10
+                            },
+                            {
+                                id: 'e18',
+                                pergunta: 'Qual a 1ª Lei de Mendel?',
+                                alternativas: ['Segregação Independente', 'Segregação dos Fatores', 'Dominância Incompleta', 'Ligação Gênica'],
+                                correta: 1,
+                                nivel: 'intermediário',
+                                pontos: 15
+                            }
+                        ]
+                    },
+                    fisica: {
+                        id: 'fisica',
+                        nome: 'Física',
+                        icone: 'fa-atom',
+                        cor: '#3498db',
+                        resumos: [
+                            {
+                                id: 'f1',
+                                titulo: 'Mecânica - Leis de Newton',
+                                conteudo: '1ª Lei (Inércia): corpo em repouso ou movimento uniforme permanece assim a menos que uma força atue. 2ª Lei (Fundamental): F = m.a. 3ª Lei (Ação e Reação): toda ação gera uma reação de mesma intensidade e sentido oposto.',
+                                palavrasChave: ['inércia', 'força', 'ação e reação'],
+                                nivel: 'intermediário'
+                            },
+                            {
+                                id: 'f2',
+                                titulo: 'Termodinâmica - Conceitos Básicos',
+                                conteudo: 'Termodinâmica estuda calor e temperatura. Conceitos: calor (energia em trânsito), temperatura (medida da agitação molecular), dilatação, mudanças de estado físico.',
+                                palavrasChave: ['calor', 'temperatura', 'dilatação'],
+                                nivel: 'intermediário'
+                            }
+                        ],
+                        exercicios: [
+                            {
+                                id: 'e21',
+                                pergunta: 'Qual a 2ª Lei de Newton?',
+                                alternativas: ['Inércia', 'F = m.a', 'Ação e Reação', 'Força Gravitacional'],
+                                correta: 1,
+                                nivel: 'intermediário',
+                                pontos: 15
+                            },
+                            {
+                                id: 'e22',
+                                pergunta: 'Qual a unidade de temperatura no SI?',
+                                alternativas: ['Celsius', 'Fahrenheit', 'Kelvin', 'Rankine'],
+                                correta: 2,
+                                nivel: 'básico',
+                                pontos: 10
+                            }
+                        ]
+                    },
+                    quimica: {
+                        id: 'quimica',
+                        nome: 'Química',
+                        icone: 'fa-flask',
+                        cor: '#9b59b6',
+                        resumos: [
+                            {
+                                id: 'q1',
+                                titulo: 'Química Geral - Estrutura Atômica',
+                                conteudo: 'Átomo: prótons (+), nêutrons (0) e elétrons (-). Modelos: Dalton (esfera maciça), Thomson (pudim com passas), Rutherford (núcleo), Bohr (camadas).',
+                                palavrasChave: ['átomo', 'prótons', 'elétrons', 'núcleo'],
+                                nivel: 'básico'
+                            },
+                            {
+                                id: 'q2',
+                                titulo: 'Tabela Periódica - Propriedades',
+                                conteudo: 'Tabela organiza elementos por número atômico. Períodos (linhas) e grupos (colunas). Propriedades: eletronegatividade, eletropositividade, raio atômico.',
+                                palavrasChave: ['períodos', 'grupos', 'metais'],
+                                nivel: 'intermediário'
+                            }
+                        ],
+                        exercicios: [
+                            {
+                                id: 'e25',
+                                pergunta: 'Qual a partícula fundamental com carga positiva?',
+                                alternativas: ['Elétron', 'Nêutron', 'Próton', 'Pósitron'],
+                                correta: 2,
+                                nivel: 'básico',
+                                pontos: 10
+                            },
+                            {
+                                id: 'e26',
+                                pergunta: 'Qual elemento químico tem símbolo "Na"?',
+                                alternativas: ['Nitrogênio', 'Sódio', 'Níquel', 'Neônio'],
+                                correta: 1,
+                                nivel: 'básico',
+                                pontos: 10
+                            }
+                        ]
+                    },
+                    ingles: {
+                        id: 'ingles',
+                        nome: 'Inglês',
+                        icone: 'fa-language',
+                        cor: '#e67e22',
+                        resumos: [
+                            {
+                                id: 'i1',
+                                titulo: 'Verb Tenses - Present, Past and Future',
+                                conteudo: 'Tempos verbais: Simple Present (rotina), Present Continuous (ação em andamento), Simple Past (passado concluído), Past Continuous (ação em andamento no passado), Simple Future (will/going to) e Present Perfect.',
+                                palavrasChave: ['present', 'past', 'future', 'continuous'],
+                                nivel: 'básico'
+                            },
+                            {
+                                id: 'i2',
+                                titulo: 'Modal Verbs - Can, Should, Must, Could',
+                                conteudo: 'Modal verbs expressam possibilidade, obrigação, permissão e conselho. Can (poder/habilidade), Should (deveria/conselho), Must (dever/obrigação), Could (possibilidade/permissão no passado).',
+                                palavrasChave: ['can', 'should', 'must', 'could'],
+                                nivel: 'intermediário'
+                            }
+                        ],
+                        exercicios: [
+                            {
+                                id: 'e29',
+                                pergunta: 'Qual o passado de "go"?',
+                                alternativas: ['Goed', 'Went', 'Gone', 'Going'],
+                                correta: 1,
+                                nivel: 'básico',
+                                pontos: 10
+                            },
+                            {
+                                id: 'e30',
+                                pergunta: 'Qual modal verb indica obrigação?',
+                                alternativas: ['Can', 'Should', 'Must', 'Could'],
+                                correta: 2,
+                                nivel: 'intermediário',
+                                pontos: 15
+                            }
+                        ]
+                    }
+                }
+            },
 
-            </section>
+            getMaterias() {
+                return Object.values(this.data.materias).map(m => ({
+                    id: m.id,
+                    nome: m.nome,
+                    icone: m.icone,
+                    cor: m.cor,
+                    totalResumos: m.resumos.length,
+                    totalExercicios: m.exercicios.length
+                }));
+            },
 
-            <!-- Sugestões -->
-            <section class="section" id="sugestoes">
+            getMateria(id) {
+                return this.data.materias[id] || null;
+            },
 
-                <a href="https://github.com/frontendbr/sugestoes/issues" class="box">Clique aqui para enviar uma sugestão!</a>
+            getResumos(materiaId) {
+                const materia = this.getMateria(materiaId);
+                return materia ? materia.resumos : [];
+            },
 
-            </section>
+            getExercicios(materiaId) {
+                const materia = this.getMateria(materiaId);
+                return materia ? materia.exercicios : [];
+            },
 
-        </main>
+            verificarResposta(materiaId, exercicioId, resposta) {
+                const exercicios = this.getExercicios(materiaId);
+                const exercicio = exercicios.find(e => e.id === exercicioId);
+                if (!exercicio) return null;
+                return {
+                    correto: exercicio.correta === resposta,
+                    pontos: exercicio.correta === resposta ? exercicio.pontos : 0,
+                    respostaCorreta: exercicio.alternativas[exercicio.correta]
+                };
+            },
 
-        <footer class="footer">
-            <p>Copyright &copy; <script type="text/javascript">document.write(new Date().getFullYear())</script>. Made with coffee and love.</p>
-        </footer>
+            buscar(termo) {
+                const resultados = [];
+                const termoLower = termo.toLowerCase();
 
-    </body>
+                for (const [id, materia] of Object.entries(this.data.materias)) {
+                    const resumosMatch = materia.resumos.filter(r =>
+                        r.titulo.toLowerCase().includes(termoLower) ||
+                        r.conteudo.toLowerCase().includes(termoLower) ||
+                        r.palavrasChave.some(p => p.toLowerCase().includes(termoLower))
+                    );
+
+                    const exerciciosMatch = materia.exercicios.filter(e =>
+                        e.pergunta.toLowerCase().includes(termoLower)
+                    );
+
+                    if (resumosMatch.length > 0 || exerciciosMatch.length > 0) {
+                        resultados.push({
+                            materia: {
+                                id: materia.id,
+                                nome: materia.nome,
+                                icone: materia.icone,
+                                cor: materia.cor
+                            },
+                            resumos: resumosMatch,
+                            exercicios: exerciciosMatch
+                        });
+                    }
+                }
+                return resultados;
+            }
+        };
+
+        // Inicialização
+        document.addEventListener('DOMContentLoaded', function() {
+            const usuario = JSON.parse(localStorage.getItem('usuario')) || { xp: 1250 };
+            document.getElementById('user-points-header').textContent = `${usuario.xp} XP`;
+        });
+    </script>
+</body>
 </html>

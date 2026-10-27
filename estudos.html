@@ -1,0 +1,3220 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Estudos - Aprendi+</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        :root {
+            --primary: #6a11cb;
+            --secondary: #2575fc;
+            --accent: #ffcc00;
+            --light: #f8f9fa;
+            --text: #333;
+            --text-light: #6c757d;
+        }
+
+        body {
+            background: #f5f7fb;
+            color: var(--text);
+            line-height: 1.6;
+        }
+
+        /* HEADER */
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 15px 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .header-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            font-size: 1.8rem;
+            font-weight: 800;
+            text-decoration: none;
+            color: white;
+        }
+
+        .logo span { color: var(--accent); }
+        .logo i { margin-right: 10px; }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            padding: 6px 16px;
+            border-radius: 30px;
+            transition: 0.2s;
+        }
+
+        nav ul li a:hover,
+        nav ul li a.active { background: rgba(255,255,255,0.15); }
+
+        .user-actions {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .user-points {
+            background: rgba(255,255,255,0.2);
+            padding: 6px 16px;
+            border-radius: 30px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .user-points i { color: var(--accent); }
+
+        .btn {
+            padding: 8px 22px;
+            border-radius: 30px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.2s;
+            text-decoration: none;
+            display: inline-block;
+            border: none;
+        }
+
+        .btn-primary {
+            background: white;
+            color: var(--primary);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 18px rgba(0,0,0,0.15);
+        }
+
+        /* PAGE HEADER */
+        .page-header {
+            background: linear-gradient(135deg, rgba(106,17,203,0.9), rgba(37,117,252,0.9));
+            color: white;
+            padding: 50px 20px;
+            text-align: center;
+        }
+
+        .page-header h1 { font-size: 2.5rem; margin-bottom: 10px; }
+        .page-header p { font-size: 1.1rem; opacity: 0.9; }
+
+        /* MAIN */
+        .main-content {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        .search-box {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 30px;
+        }
+
+        .search-box input {
+            flex: 1;
+            padding: 12px 20px;
+            border: 2px solid #ddd;
+            border-radius: 30px;
+            font-size: 1rem;
+        }
+
+        .search-box input:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+
+        .search-box button {
+            padding: 12px 30px;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        .search-box button:hover { background: var(--secondary); }
+
+        .materias-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+
+        .materia-card {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            text-align: center;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+            cursor: pointer;
+            transition: all 0.3s;
+            border-left: 5px solid var(--primary);
+        }
+
+        .materia-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+        }
+
+        .materia-card .icon { font-size: 2.5rem; margin-bottom: 10px; }
+        .materia-card h3 { font-size: 1.3rem; margin-bottom: 5px; }
+        .materia-card p { color: var(--text-light); font-size: 0.9rem; }
+
+        .materia-content {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+            display: none;
+        }
+
+        .materia-content.active { display: block; }
+
+        .back-btn {
+            background: var(--light);
+            border: none;
+            padding: 10px 20px;
+            border-radius: 30px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: 0.2s;
+        }
+
+        .back-btn:hover { background: #e9ecef; }
+
+        .materia-title {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .materia-title i { font-size: 2rem; }
+        .materia-title h2 { font-size: 2rem; }
+
+        .tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 25px;
+            border-bottom: 2px solid #eee;
+            padding-bottom: 10px;
+        }
+
+        .tab-btn {
+            padding: 10px 25px;
+            border: none;
+            background: none;
+            cursor: pointer;
+            font-weight: 600;
+            color: var(--text-light);
+            border-radius: 30px;
+            transition: 0.2s;
+        }
+
+        .tab-btn.active {
+            background: var(--primary);
+            color: white;
+        }
+
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+
+        .resumo-item {
+            background: var(--light);
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 15px;
+            border-left: 4px solid var(--primary);
+        }
+
+        .resumo-item h4 { margin-bottom: 8px; color: var(--primary); }
+
+        .nivel {
+            display: inline-block;
+            padding: 2px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-top: 8px;
+        }
+
+        .nivel.basico { background: #d4edda; color: #155724; }
+        .nivel.intermediario { background: #fff3cd; color: #856404; }
+        .nivel.avancado { background: #f8d7da; color: #721c24; }
+
+        .exercicio-item {
+            background: var(--light);
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .exercicio-item .pergunta {
+            font-weight: 600;
+            font-size: 1.1rem;
+            margin-bottom: 12px;
+        }
+
+        .alternativas {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .alternativas label {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 15px;
+            background: white;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: 0.2s;
+            border: 2px solid transparent;
+        }
+
+        .alternativas label:hover { border-color: var(--secondary); }
+
+        .alternativas input[type="radio"] {
+            width: 18px;
+            height: 18px;
+            accent-color: var(--primary);
+        }
+
+        .btn-responder {
+            margin-top: 12px;
+            padding: 10px 30px;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: 0.2s;
+        }
+
+        .btn-responder:hover { transform: scale(1.05); }
+        .btn-responder:disabled { opacity: 0.5; cursor: not-allowed; }
+
+        .resultado {
+            margin-top: 12px;
+            padding: 12px 20px;
+            border-radius: 10px;
+            font-weight: 600;
+            display: none;
+        }
+
+        .resultado.correto {
+            display: block;
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .resultado.errado {
+            display: block;
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        .search-results {
+            display: none;
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+            margin-bottom: 30px;
+        }
+
+        .search-results.active { display: block; }
+
+        .result-item {
+            padding: 15px;
+            border-bottom: 1px solid #eee;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .result-item:hover { background: var(--light); }
+        .result-item:last-child { border-bottom: none; }
+
+        .result-item .materia-nome {
+            font-weight: 600;
+            color: var(--primary);
+        }
+
+     
+        footer {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 40px 20px 20px;
+            margin-top: 30px;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+        }
+
+        .footer-column h3 { margin-bottom: 15px; }
+        .footer-column ul { list-style: none; }
+        .footer-column ul li { margin-bottom: 8px; }
+        .footer-column ul li a {
+            color: rgba(255,255,255,0.8);
+            text-decoration: none;
+        }
+        .footer-column ul li a:hover { color: white; }
+
+        .copyright {
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            color: rgba(255,255,255,0.7);
+        }
+
+        @media (max-width: 768px) {
+            .header-container { flex-direction: column; text-align: center; }
+            .materias-grid { grid-template-columns: 1fr; }
+            .tabs { flex-wrap: wrap; }
+            .search-box { flex-direction: column; }
+        }
+    
+
+.achievement-toast{
+    position:fixed;
+    right:26px;
+    bottom:26px;
+    width:390px;
+    min-height:105px;
+    background:linear-gradient(135deg,#151515,#292929);
+    color:#fff;
+    border:1px solid rgba(255,204,0,.35);
+    border-radius:8px;
+    z-index:99999;
+    display:flex;align-items:center;gap:16px;padding:15px 18px;box-shadow:0 15px 45px rgba(0,0,0,.45);transform:translateX(120%);opacity:0;overflow:hidden}
+.achievement-toast.show {
+    animation: xboxAchievement 4.8s cubic-bezier(.2,.8,.2,1) forwards
+}
+
+.achievement-toast:before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 5px;
+    background: linear-gradient(#ffcc00,#f39c12)
+}
+
+.achievement-badge {
+    width: 68px;
+    height: 68px;
+    min-width: 68px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 35% 30%,#ffe98a,#ffb300 48%,#9a6100);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #171717;
+    font-size: 28px;
+    box-shadow: 0 0 0 3px rgba(255,204,0,.18),0 0 28px rgba(255,204,0,.35);
+    animation: badgePop .65s .15s both
+}
+
+.achievement-toast small {
+    display: block;
+    color: #bdbdbd;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    font-weight: 700;
+    font-size: 10px;
+    margin-bottom: 3px
+}
+
+.achievement-toast strong {
+    display: block;
+    font-size: 17px
+}
+
+.achievement-toast span {
+    display: block;
+    color: #ffcc00;
+    font-size: 12px;
+    margin-top: 4px;
+    font-weight: 700
+}
+
+.xp-float {
+    position: fixed;
+    right: 30px;
+    top: 92px;
+    z-index: 99998;
+    color: #ffcc00;
+    font-size: 20px;
+    font-weight: 900;
+    pointer-events: none;
+    text-shadow: 0 2px 8px #000;
+    animation: xpFloat 1.1s ease-out forwards
+}
+
+@keyframes xboxAchievement {
+    0% {
+        transform: translateX(120%);
+        opacity: 0
+    }
+
+    12% {
+        transform: translateX(0);
+        opacity: 1
+    }
+
+    78% {
+        transform: translateX(0);
+        opacity: 1
+    }
+
+    100% {
+        transform: translateX(120%);
+        opacity: 0
+    }
+}
+
+@keyframes badgePop {
+    0% {
+        transform: scale(.2) rotate(-25deg);
+        opacity: 0
+    }
+
+    65% {
+        transform: scale(1.12) rotate(4deg)
+    }
+
+    100% {
+        transform: scale(1) rotate(0);
+        opacity: 1
+    }
+}
+
+@keyframes xpFloat {
+    0% {
+        transform: translateY(0) scale(.8);
+        opacity: 0
+    }
+
+    20% {
+        opacity: 1
+    }
+
+    100% {
+        transform: translateY(-55px) scale(1.08);
+        opacity: 0
+    }
+}
+
+@media(max-width:600px) {
+    .achievement-toast {
+        left: 12px;
+        right: 12px;
+        width: auto;
+        bottom: 12px
+    }
+}
+
+.gam-xp-float,
+.gam-coin-float {
+    position: fixed;
+    right: 34px;
+    top: 95px;
+    z-index: 100000;
+    font-weight: 900;
+    font-size: 21px;
+    pointer-events: none;
+    text-shadow: 0 3px 12px rgba(0,0,0,.35);
+    animation: gamFloat 1.35s ease-out forwards
+}
+
+.gam-xp-float {
+    color: var(--accent)
+}
+
+.gam-coin-float {
+    top: 132px;
+    color: var(--accent)
+}
+
+.gam-achievement {
+    position: fixed;
+    right: 22px;
+    bottom: 22px;
+    width: 410px;
+    min-height: 112px;
+    background: linear-gradient(135deg,#151526,#20204a);
+    color: #fff;
+    border: 1px solid rgba(106,17,203,.7);
+    border-left: 5px solid var(--primary);
+    border-radius: 10px;
+    z-index: 100001;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 15px 18px;
+    box-shadow: 0 20px 55px rgba(37,117,252,.25);
+    transform: translateX(120%);
+    opacity: 0
+}
+
+.gam-achievement.show {
+    animation: gamAchievement 6.2s cubic-bezier(.18,.8,.22,1) forwards
+}
+
+.gam-achievement-icon {
+    width: 70px;
+    height: 70px;
+    min-width: 70px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 28px;
+    color: #fff;
+    background: linear-gradient(135deg,var(--primary),var(--secondary));
+    box-shadow: 0 0 0 4px rgba(106,17,203,.2),0 0 25px rgba(37,117,252,.3);
+    animation: gamBadge .7s .15s both
+}
+
+.gam-achievement-icon.accent {
+    background: linear-gradient(135deg,var(--accent),var(--warning));
+    color: #3b2a00
+}
+
+.gam-achievement-copy small {
+    display: block;
+    font-size: 9px;
+    letter-spacing: 1.7px;
+    color: #b9b9cc;
+    font-weight: 800
+}
+
+.gam-achievement-copy b {
+    display: block;
+    font-size: 19px;
+    margin-top: 2px
+}
+
+.gam-achievement-copy span {
+    display: block;
+    font-size: 12px;
+    color: #d3d3df;
+    margin-top: 2px
+}
+
+.gam-achievement-copy em {
+    display: block;
+    font-size: 11px;
+    color: var(--accent);
+    font-style: normal;
+    font-weight: 800;
+    margin-top: 5px
+}
+
+.gam-levelup {
+    position: fixed;
+    inset: 0;
+    z-index: 100002;
+    background: radial-gradient(circle at center,rgba(106,17,203,.25),rgba(10,10,20,.97) 58%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    animation: gamFade .3s ease
+}
+
+.levelup-glow {
+    position: absolute;
+    width: 520px;
+    height: 520px;
+    border-radius: 50%;
+    background: radial-gradient(circle,rgba(37,117,252,.35),transparent 65%);
+    animation: gamPulse 1.5s infinite
+}
+
+.levelup-card {
+    position: relative;
+    text-align: center;
+    color: #fff;
+    width: min(470px,90vw);
+    padding: 45px 30px;
+    border: 1px solid rgba(255,255,255,.12);
+    border-radius: 24px;
+    background: linear-gradient(145deg,rgba(22,22,45,.97),rgba(18,18,32,.97));
+    box-shadow: 0 30px 90px rgba(0,0,0,.55)
+}
+
+.levelup-icon {
+    width: 82px;
+    height: 82px;
+    margin: 0 auto 18px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg,var(--primary),var(--secondary));
+    font-size: 34px;
+    box-shadow: 0 0 35px rgba(37,117,252,.45);
+    animation: gamBadge .8s both
+}
+
+.levelup-card small {
+    letter-spacing: 3px;
+    color: #bbb;
+    font-weight: 800
+}
+
+.levelup-card h2 {
+    font-size: 54px;
+    line-height: 1;
+    margin: 10px 0;
+    background: linear-gradient(90deg,var(--primary),var(--secondary));
+    -webkit-background-clip: text;
+    color: transparent
+}
+
+.levelup-card p {
+    color: #c5c5d0
+}
+
+.levelup-line {
+    height: 2px;
+    background: linear-gradient(90deg,transparent,var(--secondary),transparent);
+    margin: 22px 0
+}
+
+.levelup-card span {
+    color: #aaa;
+    font-size: 13px
+}
+
+.levelup-card button,
+.gam-chest-modal button {
+    margin-top: 22px;
+    border: 0;
+    border-radius: 30px;
+    padding: 12px 30px;
+    font-weight: 800;
+    color: #fff;
+    background: linear-gradient(135deg,var(--primary),var(--secondary));
+    cursor: pointer
+}
+
+.gam-mission-pop {
+    position: fixed;
+    left: 22px;
+    bottom: 22px;
+    background: #fff;
+    color: var(--text);
+    border-left: 5px solid var(--primary);
+    border-radius: 10px;
+    padding: 14px 18px;
+    display: flex;
+    gap: 13px;
+    align-items: center;
+    z-index: 100001;
+    box-shadow: 0 15px 40px rgba(0,0,0,.2);
+    transform: translateX(-120%);
+    opacity: 0
+}
+
+.gam-mission-pop.show {
+    animation: gamMission 4s ease forwards
+}
+
+.gam-mission-pop>i {
+    font-size: 25px;
+    color: var(--primary)
+}
+
+.gam-mission-pop small,
+.gam-mission-pop b,
+.gam-mission-pop span {
+    display: block
+}
+
+.gam-mission-pop small {
+    font-size: 9px;
+    color: #777;
+    font-weight: 800;
+    letter-spacing: 1px
+}
+
+.gam-mission-pop b {
+    font-size: 15px
+}
+
+.gam-mission-pop span {
+    font-size: 11px;
+    color: var(--primary);
+    font-weight: 800
+}
+
+.gam-chest-modal {
+    position: fixed;
+    inset: 0;
+    background: rgba(10,10,20,.75);
+    z-index: 100003;
+    display: flex;
+    align-items: center;
+    justify-content: center
+}
+
+.chest-card {
+    background: #fff;
+    width: min(420px,90vw);
+    border-radius: 22px;
+    text-align: center;
+    padding: 30px;
+    box-shadow: 0 30px 90px rgba(0,0,0,.45);
+    animation: chestPop .45s both
+}
+
+.chest-box {
+    width: 105px;
+    height: 105px;
+    margin: 0 auto 15px;
+    border-radius: 25px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 45px;
+    color: #fff;
+    background: linear-gradient(135deg,var(--primary),var(--secondary));
+    box-shadow: 0 15px 35px rgba(106,17,203,.3);
+    animation: chestBounce 1s ease-in-out infinite
+}
+
+.chest-card small {
+    color: #777;
+    font-weight: 800;
+    letter-spacing: 2px
+}
+
+.chest-card h2 {
+    color: var(--primary);
+    font-size: 30px;
+    margin: 4px
+}
+
+.chest-card p {
+    color: #777
+}
+
+.chest-rewards {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    margin-top: 20px
+}
+
+.chest-rewards strong {
+    padding: 12px 18px;
+    background: var(--light);
+    border-radius: 12px;
+    color: var(--primary)
+}
+
+.gam-xp-panel {
+    margin-top: 18px;
+    padding: 14px;
+    border-radius: 14px;
+    background: linear-gradient(135deg,rgba(106,17,203,.06),rgba(37,117,252,.08));
+    border: 1px solid rgba(106,17,203,.12)
+}
+
+.gam-xp-panel-head {
+    display: flex;
+    justify-content: space-between;
+    font-weight: 800;
+    color: var(--primary);
+    margin-bottom: 8px
+}
+
+.gam-xp-bar {
+    height: 14px;
+    background: #e9ecef;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: inset 0 1px 3px rgba(0,0,0,.1)
+}
+
+.gam-xp-fill {
+    height: 100%;
+    width: 0;
+    border-radius: 20px;
+    background: linear-gradient(90deg,var(--primary),var(--secondary));
+    transition: width 1s cubic-bezier(.2,.8,.2,1);
+    position: relative;
+    overflow: hidden
+}
+
+.gam-xp-fill:after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(90deg,transparent,rgba(255,255,255,.35),transparent);
+    animation: gamShine 1.8s linear infinite
+}
+
+.gam-coins {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    margin-top: 10px;
+    padding: 7px 12px;
+    border-radius: 20px;
+    background: rgba(255,204,0,.12);
+    color: #9b7200;
+    font-weight: 800
+}
+
+.gam-streak {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 8px;
+    margin-left: 5px;
+    padding: 7px 12px;
+    border-radius: 20px;
+    background: rgba(243,156,18,.12);
+    color: #c66d00;
+    font-weight: 800
+}
+
+@keyframes gamFloat {
+    0% {
+        transform: translateY(0) scale(.8);
+        opacity: 0
+    }
+
+    20% {
+        opacity: 1
+    }
+
+    100% {
+        transform: translateY(-65px) scale(1.08);
+        opacity: 0
+    }
+}
+
+@keyframes gamAchievement {
+    0% {
+        transform: translateX(120%);
+        opacity: 0
+    }
+
+    10% {
+        transform: translateX(0);
+        opacity: 1
+    }
+
+    82% {
+        transform: translateX(0);
+        opacity: 1
+    }
+
+    100% {
+        transform: translateX(120%);
+        opacity: 0
+    }
+}
+
+@keyframes gamBadge {
+    0% {
+        transform: scale(.2) rotate(-20deg);
+        opacity: 0
+    }
+
+    65% {
+        transform: scale(1.12) rotate(4deg)
+    }
+
+    100% {
+        transform: scale(1) rotate(0);
+        opacity: 1
+    }
+}
+
+@keyframes gamFade {
+    from {
+        opacity: 0
+    }
+
+    to {
+        opacity: 1
+    }
+}
+
+@keyframes gamPulse {
+    50% {
+        transform: scale(1.08);
+        opacity: .7
+    }
+}
+
+@keyframes gamMission {
+    0% {
+        transform: translateX(-120%);
+        opacity: 0
+    }
+
+    12%,
+    80% {
+        transform: translateX(0);
+        opacity: 1
+    }
+
+    100% {
+        transform: translateX(-120%);
+        opacity: 0
+    }
+}
+
+@keyframes chestPop {
+    from {
+        transform: scale(.75);
+        opacity: 0
+    }
+
+    to {
+        transform: scale(1);
+        opacity: 1
+    }
+}
+
+@keyframes chestBounce {
+    50% {
+        transform: translateY(-7px) rotate(-2deg)
+    }
+}
+
+@keyframes gamShine {
+    to {
+        transform: translateX(250%)
+    }
+}
+
+@media(max-width:600px) {
+    .gam-achievement {
+        width: calc(100vw - 24px);
+        right: 12px;
+        bottom: 12px
+    }
+
+    .gam-mission-pop {
+        left: 12px;
+        right: 12px
+    }
+
+    .gam-achievement-icon {
+        width: 58px;
+        height: 58px;
+        min-width: 58px
+    }
+
+    .levelup-card h2 {
+        font-size: 44px
+    }
+}
+
+.topic-card {
+    background: #fff;
+    border: 1px solid #e8e8ef;
+    border-radius: 16px;
+    margin-bottom: 16px;
+    overflow: hidden;
+    box-shadow: 0 4px 14px rgba(0,0,0,.04)
+}
+
+.topic-head {
+    padding: 18px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+    cursor: pointer
+}
+
+.topic-head h4 {
+    font-size: 1.08rem;
+    margin: 0
+}
+
+.topic-head small {
+    color: var(--text-light)
+}
+
+.topic-toggle {
+    border: 0;
+    background: #f0f2ff;
+    color: var(--primary);
+    border-radius: 20px;
+    padding: 8px 14px;
+    font-weight: 700;
+    cursor: pointer
+}
+
+.topic-body {
+    display: none;
+    padding: 0 20px 20px
+}
+
+.topic-body.open {
+    display: block
+}
+
+.topic-text {
+    background: #f8f9fc;
+    border-radius: 12px;
+    padding: 16px;
+    margin-bottom: 16px
+}
+
+.mini-quiz {
+    border-top: 1px solid #eee;
+    padding-top: 16px
+}
+
+.mini-quiz h5 {
+    font-size: 1rem;
+    margin-bottom: 12px
+}
+
+.mini-q {
+    background: #fafafa;
+    border: 1px solid #eee;
+    border-radius: 12px;
+    padding: 14px;
+    margin: 10px 0
+}
+
+.mini-q p {
+    font-weight: 700;
+    margin-bottom: 10px
+}
+
+.mini-options {
+    display: grid;
+    gap: 7px
+}
+
+.mini-options label {
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 9px;
+    padding: 9px;
+    cursor: pointer
+}
+
+.mini-options label:hover {
+    border-color: var(--primary)
+}
+
+.mini-result {
+    margin-top: 10px;
+    font-weight: 700
+}
+
+.mini-result.ok {
+    color: #1f9d55
+}
+
+.mini-result.bad {
+    color: #d64545
+}
+
+.mini-btn {
+    margin-top: 10px;
+    border: 0;
+    border-radius: 20px;
+    padding: 8px 16px;
+    background: linear-gradient(135deg,var(--primary),var(--secondary));
+    color: #fff;
+    font-weight: 700;
+    cursor: pointer
+}
+
+.mini-btn:disabled {
+    opacity: .5;
+    cursor: default
+}
+
+.game-hub {
+    max-width: 1200px;
+    margin: 22px auto 0;
+    padding: 0 20px
+}
+
+.game-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    gap: 14px
+}
+
+.game-card {
+    background: #fff;
+    border: 1px solid #e8eaf3;
+    border-radius: 20px;
+    padding: 18px;
+    box-shadow: 0 8px 25px rgba(31,38,135,.06);
+    position: relative;
+    overflow: hidden
+}
+
+.game-card::after {
+    content: "";
+    position: absolute;
+    width: 130px;
+    height: 130px;
+    border-radius: 50%;
+    right: -55px;
+    top: -65px;
+    background: linear-gradient(135deg,rgba(106,17,203,.08),rgba(37,117,252,.04))
+}
+
+.profile-game {
+    display: flex;
+    gap: 16px;
+    align-items: center
+}
+
+.level-orb {
+    width: 76px;
+    height: 76px;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    background: conic-gradient(#6a11cb var(--p),#edf0f8 0);
+    position: relative;
+    flex: none
+}
+
+.level-orb::before {
+    content: "";
+    position: absolute;
+    inset: 7px;
+    border-radius: 50%;
+    background: #fff
+}
+
+.level-orb b {
+    position: relative;
+    font-size: 1.2rem
+}
+
+.game-copy {
+    flex: 1
+}
+
+.game-copy small {
+    color: #7a8192;
+    font-weight: 700
+}
+
+.game-copy h3 {
+    margin: 2px 0 8px
+}
+
+.xp-track {
+    height: 10px;
+    background: #edf0f8;
+    border-radius: 99px;
+    overflow: hidden
+}
+
+.xp-fill {
+    height: 100%;
+    width: 0;
+    background: linear-gradient(90deg,#6a11cb,#2575fc);
+    border-radius: 99px;
+    transition: width .7s cubic-bezier(.2,.8,.2,1)
+}
+
+.xp-meta {
+    display: flex;
+    justify-content: space-between;
+    font-size: .78rem;
+    color: #777;
+    margin-top: 5px
+}
+
+.streak-big {
+    font-size: 2rem;
+    font-weight: 900
+}
+
+.streak-fire {
+    font-size: 1.4rem
+}
+
+.mission-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 10px
+}
+
+.mission-bar {
+    height: 7px;
+    background: #edf0f8;
+    border-radius: 99px;
+    flex: 1;
+    overflow: hidden
+}
+
+.mission-bar span {
+    display: block;
+    height: 100%;
+    background: linear-gradient(90deg,#ff9f43,#ffcc00);
+    border-radius: 99px
+}
+
+.mission-mini {
+    font-size: .78rem;
+    color: #6c7384
+}
+
+.game-actions {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-top: 12px
+}
+
+.game-btn {
+    border: 0;
+    border-radius: 12px;
+    padding: 9px 12px;
+    background: #f0f2ff;
+    color: #4c46a8;
+    font-weight: 800;
+    cursor: pointer
+}
+
+.game-btn.primary {
+    background: linear-gradient(135deg,#6a11cb,#2575fc);
+    color: #fff
+}
+
+.game-btn:hover {
+    transform: translateY(-1px)
+}
+
+.streak-days {
+    display: flex;
+    gap: 5px;
+    margin-top: 10px
+}
+
+.streak-days span {
+    width: 22px;
+    height: 22px;
+    border-radius: 7px;
+    background: #eef0f7;
+    display: grid;
+    place-items: center;
+    font-size: .65rem;
+    font-weight: 800;
+    color: #888
+}
+
+.streak-days span.done {
+    background: #ffb84d;
+    color: #fff
+}
+
+.quick-stats {
+    display: grid;
+    grid-template-columns: repeat(4,1fr);
+    gap: 10px;
+    margin-top: 14px
+}
+
+.quick-stat {
+    background: #fff;
+    border: 1px solid #e8eaf3;
+    border-radius: 15px;
+    padding: 13px
+}
+
+.quick-stat small {
+    color: #7c8290
+}
+
+.quick-stat strong {
+    display: block;
+    font-size: 1.25rem;
+    margin-top: 2px
+}
+
+.rank-card {
+    margin-top: 14px
+}
+
+.rank-list {
+    display: grid;
+    gap: 7px;
+    margin-top: 10px
+}
+
+.rank-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 9px 10px;
+    background: #f8f9fc;
+    border-radius: 11px
+}
+
+.rank-item.me {
+    background: #eeeaff;
+    border: 1px solid #ddd5ff
+}
+
+.rank-num {
+    width: 25px;
+    font-weight: 900
+}
+
+.rank-name {
+    flex: 1;
+    font-weight: 700
+}
+
+.rank-xp {
+    font-size: .8rem;
+    color: #6f7585
+}
+
+.chest {
+    width: 58px;
+    height: 48px;
+    border-radius: 10px;
+    background: linear-gradient(#c58a45 0 35%,#8b572a 35%);
+    display: grid;
+    place-items: center;
+    color: #ffd76b;
+    font-size: 1.45rem;
+    cursor: pointer;
+    box-shadow: inset 0 -6px 0 rgba(0,0,0,.12);
+    transition: .2s
+}
+
+.chest:hover {
+    transform: translateY(-3px) rotate(-2deg)
+}
+
+.chest-count {
+    font-weight: 900
+}
+
+.reward-popup,
+.mission-popup {
+    position: fixed;
+    z-index: 10000;
+    right: 24px;
+    bottom: 24px;
+    background: #fff;
+    border: 1px solid #e5e7ef;
+    border-radius: 18px;
+    box-shadow: 0 18px 55px rgba(20,24,50,.2);
+    padding: 16px 18px;
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    transform: translateY(25px);
+    opacity: 0;
+    animation: popIn .35s forwards
+}
+
+.reward-popup i,
+.mission-popup i {
+    font-size: 1.7rem;
+    color: #ffb52e
+}
+
+.reward-popup b,
+.mission-popup b {
+    display: block
+}
+
+.reward-popup small,
+.mission-popup small {
+    display: block;
+    color: #777;
+    font-weight: 800
+}
+
+.modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(14,18,38,.55);
+    backdrop-filter: blur(5px);
+    z-index: 9999;
+    display: grid;
+    place-items: center;
+    padding: 20px
+}
+
+.game-modal {
+    width: min(620px,100%);
+    background: #fff;
+    border-radius: 24px;
+    padding: 25px;
+    box-shadow: 0 30px 100px rgba(0,0,0,.3);
+    animation: modalIn .3s ease
+}
+
+.game-modal h2 {
+    margin-bottom: 6px
+}
+
+.modal-close {
+    float: right;
+    border: 0;
+    background: #f1f2f7;
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    cursor: pointer
+}
+
+.reward-grid {
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+    gap: 12px;
+    margin-top: 18px
+}
+
+.reward-choice {
+    padding: 16px;
+    border: 1px solid #e5e7ef;
+    border-radius: 15px;
+    text-align: center;
+    cursor: pointer;
+    background: #fafbfe
+}
+
+.reward-choice:hover {
+    border-color: #7b67d8;
+    transform: translateY(-2px)
+}
+
+.reward-choice i {
+    font-size: 2rem;
+    color: #c58a45
+}
+
+.session {
+    display: none;
+    position: fixed;
+    left: 24px;
+    bottom: 24px;
+    z-index: 9000;
+    background: #fff;
+    border: 1px solid #e5e7ef;
+    border-radius: 16px;
+    padding: 12px 15px;
+    box-shadow: 0 12px 35px rgba(20,24,50,.15)
+}
+
+.session.active {
+    display: flex;
+    align-items: center;
+    gap: 12px
+}
+
+.timer {
+    font-weight: 900;
+    color: #4c46a8
+}
+
+.topic-body.open {
+    animation: topicIn .25s ease
+}
+
+.topic-card.completed .topic-head {
+    background: linear-gradient(90deg,#f1fff7,#fff)
+}
+
+.topic-status {
+    font-size: .72rem;
+    font-weight: 900;
+    color: #1f9d55;
+    margin-left: 8px
+}
+
+.quiz-score {
+    background: #f7f5ff;
+    border-radius: 12px;
+    padding: 10px 12px;
+    margin-bottom: 12px;
+    color: #5148a7;
+    font-weight: 800
+}
+
+.flash-note {
+    background: #fff8e8;
+    border-left: 4px solid #ffbd45;
+    padding: 12px;
+    border-radius: 10px;
+    margin-top: 12px
+}
+
+.study-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    margin-top: 15px;
+    flex-wrap: wrap
+}
+
+.completion-ring {
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    background: conic-gradient(#35b97f var(--p),#e9edf4 0);
+    position: relative
+}
+
+.completion-ring::before {
+    content: "";
+    position: absolute;
+    inset: 5px;
+    background: #fff;
+    border-radius: 50%
+}
+
+.completion-ring span {
+    position: relative;
+    font-size: .7rem;
+    font-weight: 900
+}
+
+.daily-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 5px 9px;
+    border-radius: 99px;
+    background: #fff2d8;
+    color: #a86b00;
+    font-size: .72rem;
+    font-weight: 900
+}
+
+@keyframes popIn {
+    to {
+        transform: none;
+        opacity: 1
+    }
+}
+
+@keyframes modalIn {
+    from {
+        transform: scale(.92);
+        opacity: 0
+    }
+
+    to {
+        transform: scale(1);
+        opacity: 1
+    }
+}
+
+@keyframes topicIn {
+    from {
+        opacity: 0;
+        transform: translateY(-5px)
+    }
+
+    to {
+        opacity: 1;
+        transform: none
+    }
+}
+
+@media(max-width:900px) {
+    .game-grid {
+        grid-template-columns: 1fr 1fr
+    }
+
+    .game-card:first-child {
+        grid-column: 1/-1
+    }
+}
+
+@media(max-width:600px) {
+    .game-grid,
+    .quick-stats,
+    .reward-grid {
+        grid-template-columns: 1fr
+    }
+
+    .game-card:first-child {
+        grid-column: auto
+    }
+
+    .session {
+        left: 12px;
+        right: 12px;
+        bottom: 12px
+    }
+
+    .reward-popup,
+    .mission-popup {
+        left: 12px;
+        right: 12px;
+        bottom: 12px
+    }
+}
+
+.smart-study {
+    --smart-ink: #17233f;
+    --smart-muted: #74809a;
+    --smart-blue: #4768f5;
+    --smart-lilac: #8c6cf2;
+    max-width: 1200px;
+    margin: 34px auto 26px;
+    padding: 0 22px;
+    color: var(--smart-ink)
+}
+
+.smart-study * {
+    box-sizing: border-box
+}
+
+.smart-heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 22px;
+    margin: 0 0 22px;
+    padding: 0 2px
+}
+
+.smart-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: #5a68dc;
+    font-size: .72rem;
+    font-weight: 850;
+    letter-spacing: 1.8px;
+    text-transform: uppercase;
+    margin-bottom: 9px
+}
+
+.smart-eyebrow:before {
+    content: "";
+    width: 23px;
+    height: 3px;
+    border-radius: 9px;
+    background: linear-gradient(90deg,#4768f5,#9b7cf7)
+}
+
+.smart-heading h2 {
+    font-size: clamp(1.65rem,3vw,2.25rem);
+    line-height: 1.12;
+    letter-spacing: -.8px;
+    color: #17233f;
+    margin: 0 0 8px;
+    font-weight: 800
+}
+
+.smart-heading p {
+    color: #74809a;
+    font-size: .97rem;
+    margin: 0;
+    max-width: 540px
+}
+
+.smart-date {
+    flex-shrink: 0;
+    color: #63708b;
+    background: #fff;
+    border: 1px solid #e5e9f5;
+    border-radius: 14px;
+    padding: 11px 15px;
+    font-size: .84rem;
+    font-weight: 700;
+    box-shadow: 0 5px 18px rgba(38,54,103,.045)
+}
+
+.smart-grid {
+    display: grid;
+    grid-template-columns: 1.35fr 1fr 1fr;
+    gap: 17px;
+    align-items: stretch
+}
+
+.smart-card {
+    position: relative;
+    min-width: 0;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    background: #fff;
+    border: 1px solid #e8ecf6;
+    border-radius: 21px;
+    padding: 23px 22px 21px;
+    box-shadow: 0 9px 28px rgba(35,53,103,.055);
+    transition: transform .22s ease,box-shadow .22s ease,border-color .22s ease
+}
+
+.smart-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 15px 34px rgba(35,53,103,.095);
+    border-color: #d9dff5
+}
+
+.smart-main {
+    background: linear-gradient(145deg,#fff 0%,#f7f8ff 100%);
+    border-color: #dfe5ff
+}
+
+.smart-main:after {
+    content: "";
+    position: absolute;
+    top: -52px;
+    right: -44px;
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    background: radial-gradient(circle,rgba(110,126,255,.13),rgba(110,126,255,0) 70%);
+    pointer-events: none
+}
+
+.smart-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 46px;
+    height: 46px;
+    border-radius: 15px;
+    margin-bottom: 18px;
+    background: #eaf0ff;
+    color: #4c68f4;
+    font-size: 1.12rem;
+    box-shadow: inset 0 0 0 1px rgba(76,104,244,.06)
+}
+
+.smart-icon.purple {
+    background: #f0ebff;
+    color: #8662e9
+}
+
+.smart-icon.gold {
+    background: #fff5d9;
+    color: #cb8b18
+}
+
+.smart-label {
+    font-size: .68rem;
+    line-height: 1.3;
+    letter-spacing: 1.35px;
+    font-weight: 850;
+    color: #78839d;
+    display: block;
+    margin-bottom: 7px
+}
+
+.smart-card h3 {
+    font-size: 1.12rem;
+    line-height: 1.3;
+    letter-spacing: -.25px;
+    font-weight: 800;
+    color: #202c49;
+    margin: 0 0 8px
+}
+
+.smart-card p {
+    font-size: .88rem;
+    line-height: 1.6;
+    color: #78839a;
+    margin: 0 0 17px
+}
+
+.smart-main>div:nth-child(2) {
+    position: relative;
+    z-index: 1
+}
+
+.plan-checks {
+    width: 100%;
+    display: grid;
+    gap: 9px;
+    margin: 2px 0 19px
+}
+
+.plan-checks label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    min-height: 41px;
+    padding: 9px 12px;
+    border: 1px solid #e8ebf6;
+    border-radius: 11px;
+    background: rgba(255,255,255,.84);
+    font-size: .86rem;
+    font-weight: 650;
+    color: #485570;
+    cursor: pointer;
+    transition: .18s,border-color .18s
+}
+
+.plan-checks label:has(input:checked) {
+    background: #edf2ff;
+    border-color: #cbd6ff;
+    color: #354fca
+}
+
+.plan-checks input {
+    appearance: none;
+    width: 18px;
+    height: 18px;
+    min-width: 18px;
+    border: 1.7px solid #c8d0e4;
+    border-radius: 6px;
+    background: #fff;
+    cursor: pointer;
+    position: relative;
+    transition: all .18s
+}
+
+.plan-checks input:checked {
+    background: #536df2;
+    border-color: #536df2
+}
+
+.plan-checks input:checked:after {
+    content: "✓";
+    position: absolute;
+    inset: -1px;
+    color: white;
+    font-size: 13px;
+    font-weight: 900;
+    text-align: center;
+    line-height: 17px
+}
+
+.plan-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    width: 100%;
+    margin-top: auto;
+    padding-top: 15px;
+    border-top: 1px solid #e8ebf6
+}
+
+#planProgress {
+    font-size: .78rem;
+    font-weight: 800;
+    color: #697691
+}
+
+.smart-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 9px;
+    border: 0;
+    border-radius: 11px;
+    padding: 11px 15px;
+    background: linear-gradient(110deg,#526df4,#7568ef);
+    color: #fff;
+    font-size: .82rem;
+    font-weight: 800;
+    box-shadow: 0 6px 15px rgba(82,109,244,.22);
+    cursor: pointer;
+    transition: transform .18s,box-shadow .18s,filter .18s
+}
+
+.smart-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 9px 20px rgba(82,109,244,.3);
+    filter: saturate(1.1)
+}
+
+.smart-button:active {
+    transform: translateY(0)
+}
+
+.smart-button.secondary {
+    margin-top: auto;
+    background: #f0f3ff;
+    color: #4b61d8;
+    box-shadow: none;
+    border: 1px solid #e2e7ff;
+    width: 100%;
+    padding: 11px 12px
+}
+
+.smart-button.secondary:hover {
+    background: #e8edff;
+    box-shadow: 0 5px 13px rgba(82,109,244,.09)
+}
+
+.review-stats {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 13px 14px;
+    background: #f7f5ff;
+    border: 1px solid #eee9ff;
+    border-radius: 13px;
+    margin: 0 0 19px;
+    width: 100%
+}
+
+.review-stats strong {
+    font-size: 1.75rem;
+    line-height: 1;
+    color: #7c5be7;
+    letter-spacing: -1px
+}
+
+.review-stats span {
+    font-size: .77rem;
+    line-height: 1.35;
+    font-weight: 650;
+    color: #7d779b;
+    max-width: 120px
+}
+
+.week-dots {
+    display: grid;
+    grid-template-columns: repeat(7,minmax(0,1fr));
+    gap: 6px;
+    width: 100%;
+    margin: 3px 0 9px
+}
+
+.week-dot {
+    height: 31px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 9px;
+    background: #f2f4f9;
+    color: #9aa3b7;
+    font-size: .74rem;
+    font-weight: 800;
+    border: 1px solid #e9edf5
+}
+
+.week-dot.done {
+    background: linear-gradient(145deg,#ffe9a6,#ffcf63);
+    color: #785313;
+    border-color: #f7d580;
+    box-shadow: 0 3px 8px rgba(232,177,62,.14)
+}
+
+.week-caption {
+    font-size: .78rem;
+    color: #7a859b;
+    font-weight: 700;
+    margin: 0 0 17px
+}
+
+.smart-tip {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-top: 17px;
+    padding: 16px 18px;
+    border: 1px solid #e7eaf8;
+    border-radius: 17px;
+    background: linear-gradient(110deg,#f1f4ff,#fbfaff);
+    color: #596783
+}
+
+.smart-tip>i {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 39px;
+    height: 39px;
+    min-width: 39px;
+    border-radius: 12px;
+    background: #fff0c9;
+    color: #d79a23;
+    font-size: 1rem;
+    box-shadow: 0 3px 10px rgba(215,154,35,.09)
+}
+
+.smart-tip div {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    flex: 1;
+    min-width: 0
+}
+
+.smart-tip b {
+    font-size: .82rem;
+    color: #2f3c5b;
+    font-weight: 850
+}
+
+.smart-tip span {
+    font-size: .84rem;
+    line-height: 1.5;
+    color: #77829b
+}
+
+.smart-tip button {
+    width: 35px;
+    height: 35px;
+    min-width: 35px;
+    border: 1px solid #e0e5f7;
+    border-radius: 10px;
+    background: #fff;
+    color: #6677dc;
+    cursor: pointer;
+    transition: transform .2s, 2s
+}
+
+.smart-tip button:hover {
+    transform: rotate(25deg);
+    background: #edf0ff
+}
+
+@media(max-width:960px) {
+    .smart-grid {
+        grid-template-columns: repeat(2,minmax(0,1fr))
+    }
+
+    .smart-main {
+        grid-column: 1/-1
+    }
+
+    .smart-main .plan-checks {
+        grid-template-columns: repeat(3,minmax(0,1fr))
+    }
+
+    .plan-checks label {
+        align-items: flex-start;
+        line-height: 1.35
+    }
+}
+
+@media(max-width:620px) {
+    .smart-study {
+        padding: 0 15px;
+        margin: 24px auto
+    }
+
+    .smart-heading {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 12px
+    }
+
+    .smart-date {
+        padding: 8px 12px
+    }
+
+    .smart-grid {
+        grid-template-columns: 1fr;
+        gap: 13px
+    }
+
+    .smart-main {
+        grid-column: auto
+    }
+
+    .smart-main .plan-checks {
+        grid-template-columns: 1fr
+    }
+
+    .smart-card {
+        padding: 20px;
+        border-radius: 17px
+    }
+
+    .smart-tip {
+        padding: 13px;
+        gap: 10px
+    }
+
+    .smart-tip span {
+        font-size: .79rem
+    }
+
+    .plan-footer {
+        align-items: flex-start;
+        flex-direction: column
+    }
+
+    .plan-footer .smart-button {
+        width: 100%
+    }
+}
+
+@media(prefers-reduced-motion:reduce) {
+    .smart-card,
+    .smart-button,
+    .smart-tip button {
+        transition: none
+    }
+}
+</style>
+</head>
+<body>
+    <header>
+        <div class="header-container">
+            <a href="index.html" class="logo">
+                <i class="fas fa-graduation-cap"></i>
+                Aprendi<span>+</span>
+            </a>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Início</a></li>
+                    <li><a href="estudos.html" class="active">Estudos</a></li>
+                    <li><a href="perfil.html">Perfil</a></li>
+                    <li><a href="contato.html">Contato</a></li>
+                </ul>
+            </nav>
+            <div class="user-actions">
+                <div class="user-points">
+                    <i class="fas fa-coins"></i>
+                    <span id="user-points">1.250 XP</span>
+                </div>
+                <a href="entrar.html" class="btn btn-primary">Entrar</a>
+            </div>
+        </div>
+    </header>
+
+    <section class="page-header">
+        <h1>📚 Materiais de Estudo</h1>
+        <p>Escolha uma matéria e comece a aprender agora mesmo!</p>
+    </section>
+
+    <section class="game-hub">
+        <div class="game-grid">
+            <div class="game-card">
+                <div class="profile-game">
+                    <div class="level-orb" id="levelOrb" style="--p:0%"><b id="levelNumber">15</b></div>
+                    <div class="game-copy">
+                        <small>JORNADA DE ESTUDOS</small>
+                        <h3 id="gameGreeting">Seu progresso</h3>
+                        <div class="xp-track"><div class="xp-fill" id="xpFill"></div></div>
+                        <div class="xp-meta"><span id="xpNow">1.250 XP</span><span id="xpNext">0 / 250 XP</span></div>
+                    </div>
+                </div>
+                <div class="game-actions">
+                    <button class="game-btn primary" onclick="iniciarSessao()"><i class="fas fa-bolt"></i> Sessão rápida</button>
+                    <button class="game-btn" onclick="abrirConquistas()"><i class="fas fa-trophy"></i> Conquistas</button>
+                    <a class="game-btn" href="perfil.html" style="text-decoration:none;display:inline-flex;align-items:center;gap:6px"><i class="fas fa-user-graduate"></i> Meu perfil</a>
+                    <button class="game-btn" onclick="abrirBaú()"><i class="fas fa-box-open"></i> Baús <span class="chest-count" id="chestCount">0</span></button>
+                </div>
+            </div>
+            <div class="game-card">
+                <small>SEQUÊNCIA</small>
+                <div class="streak-big"><span class="streak-fire">🔥</span> <span id="streakValue">4</span> dias</div>
+                <div class="streak-days" id="streakDays"></div>
+                <div class="daily-badge"><i class="fas fa-fire"></i> Melhor: <span id="bestStreak">4</span> dias</div>
+            </div>
+            <div class="game-card">
+                <small>MISSÃO DE HOJE</small>
+                <h3 id="missionTitle">Acertar 3 questões</h3>
+                <div class="mission-row"><div class="mission-bar"><span id="missionProgress" style="width:0%"></span></div><b id="missionText">0/3</b></div>
+                <p class="mission-mini" id="missionReward">+80 XP • +25 moedas</p>
+                <div class="game-actions"><button class="game-btn" onclick="abrirMissoes()">Ver missões</button></div>
+            </div>
+        </div>
+        <div class="quick-stats">
+            <div class="quick-stat"><small>Acertos</small><strong id="statCorrect">0</strong></div>
+            <div class="quick-stat"><small>Questões</small><strong id="statAnswered">0</strong></div>
+            <div class="quick-stat"><small>Melhor combo</small><strong id="statCombo">0x</strong></div>
+            <div class="quick-stat"><small>Moedas</small><strong id="statCoins">0</strong></div>
+        </div>
+        <div class="game-card rank-card">
+            <div style="display:flex;justify-content:space-between;align-items:center"><div><small>RANKING DA TURMA</small><h3>Suba de posição estudando</h3></div><i class="fas fa-ranking-star" style="font-size:1.6rem;color:#ffb52e"></i></div>
+            <div class="rank-list" id="rankList"></div>
+        </div>
+    </section>
+
+
+    <section class="smart-study" id="smartStudy">
+      <div class="smart-heading"><div><span class="smart-eyebrow">CENTRAL DE APRENDIZAGEM</span><h2>Seu próximo passo</h2><p>Um plano simples para estudar com constância, sem ficar perdido.</p></div><div class="smart-date" id="smartDate"></div></div>
+      <div class="smart-grid">
+        <article class="smart-card smart-main"><div class="smart-icon"><i class="fas fa-route"></i></div><div><span class="smart-label">PLANO DE HOJE</span><h3 id="planTitle">Monte seu ritmo</h3><p id="planDescription">Faça uma sessão de foco, revise um assunto e teste o que aprendeu.</p></div><div class="plan-checks"><label><input type="checkbox" data-plan="focus"> Fazer 1 sessão de foco</label><label><input type="checkbox" data-plan="review"> Revisar um conteúdo</label><label><input type="checkbox" data-plan="quiz"> Responder um quiz</label></div><div class="plan-footer"><span id="planProgress">0 de 3 concluídos</span><button class="smart-button" onclick="smartStartFocus()">Começar foco <i class="fas fa-arrow-right"></i></button></div></article>
+        <article class="smart-card"><div class="smart-icon purple"><i class="fas fa-brain"></i></div><span class="smart-label">REVISÃO INTELIGENTE</span><h3>Aprenda sem esquecer</h3><p>Marque o que revisou hoje. O sistema guarda sua rotina neste navegador.</p><div class="review-stats"><strong id="reviewCount">0/7</strong><span>dias com revisão nesta semana</span></div><button class="smart-button secondary" onclick="smartMarkReview()">Marque revisão de hoje</button></article>
+        <article class="smart-card"><div class="smart-icon gold"><i class="fas fa-bullseye"></i></div><span class="smart-label">META SEMANAL</span><h3>Consistência > maratona</h3><p>Meta sugerida: estudar em 4 dias nesta semana.</p><div class="week-dots" id="weekDots"></div><div class="week-caption" id="weekCaption">0 de 4 dias concluídos</div><button class="smart-button secondary" onclick="smartMarkStudyDay()">Registrar estudo de hoje</button></article>
+      </div>
+      <div class="smart-tip"><i class="fas fa-lightbulb"></i><div><b>Dica de estudo</b><span id="smartTipText">Tente explicar o assunto com suas próprias palavras antes de olhar o resumo. Isso ajuda a perceber o que realmente entendeu.</span></div><button onclick="smartNextTip()" aria-label="Próxima dica"><i class="fas fa-rotate"></i></button></div>
+    </section>
+
+    <section class="main-content">
+        <div class="search-box">
+            <input type="text" id="searchInput" placeholder="🔍 Buscar por palavra-chave...">
+            <button onclick="buscarConteudo()">Buscar</button>
+        </div>
+
+        <div class="search-results" id="searchResults">
+            <h3 style="margin-bottom: 15px; color: var(--primary);">
+                <i class="fas fa-search"></i> Resultados da busca
+            </h3>
+            <div id="resultsList"></div>
+            <button class="back-btn" onclick="fecharBusca()" style="margin-top: 15px;">
+                <i class="fas fa-arrow-left"></i> Voltar
+            </button>
+        </div>
+
+        <div id="materiasContainer">
+            <h2 style="margin-bottom: 20px;">📖 Matérias Disponíveis</h2>
+            <div class="materias-grid" id="materiasGrid"></div>
+        </div>
+
+        <div class="materia-content" id="materiaContent">
+            <button class="back-btn" onclick="fecharMateria()">
+                <i class="fas fa-arrow-left"></i> Voltar
+            </button>
+            
+            <div class="materia-title" id="materiaTitle">
+                <i id="materiaIcon"></i>
+                <h2 id="materiaNome"></h2>
+            </div>
+
+            <div class="tabs">
+                <button class="tab-btn active" onclick="trocarTab('resumos')">
+                    <i class="fas fa-file-alt"></i> Resumos
+                </button>
+                <button class="tab-btn" onclick="trocarTab('exercicios')">
+                    <i class="fas fa-pencil-alt"></i> Exercícios
+                </button>
+            </div>
+
+            <div class="tab-content active" id="tabResumos"></div>
+            <div class="tab-content" id="tabExercicios"></div>
+        </div>
+    </section>
+
+    <div class="session" id="sessionBar"><i class="fas fa-stopwatch"></i><span>Sessão: <b class="timer" id="sessionTimer">05:00</b></span><button class="game-btn" onclick="encerrarSessao()">Encerrar</button></div>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3><i class="fas fa-graduation-cap"></i> Aprendi+</h3>
+                <p>Plataforma de estudos com API e gamificação.</p>
+            </div>
+            <div class="footer-column">
+                <h3>Navegação</h3>
+                <ul>
+                    <li><a href="index.html">Início</a></li>
+                    <li><a href="estudos.html">Estudos</a></li>
+                    <li><a href="perfil.html">Perfil</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Contato</h3>
+                <ul>
+                    <li><i class="fas fa-envelope"></i> contato@aprendi.com</li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright"><p>&copy; 2025 Aprendi+</p></div>
+    </footer>
+
+    <script>
+const GAME_KEY = 'aprendi_gamificacao_v2';
+const OLD_GAME_KEY = 'aprendi_gamificacao_v1';
+const GAME_VERSION = 2;
+
+const ACHIEVEMENTS = [
+    {
+        id: 'first',
+        name: 'Primeiro passo',
+        desc: 'Acerte seu primeiro exercício.',
+        icon: 'fa-play',
+        xp: 50,
+        rarity: 'Comum',
+        color: 'primary',
+        check: s => s.stats.correct >= 1
+    },
+    {
+        id: 'five',
+        name: 'Aquecendo a mente',
+        desc: 'Acerte 5 exercícios.',
+        icon: 'fa-bullseye',
+        xp: 75,
+        rarity: 'Comum',
+        color: 'secondary',
+        check: s => s.stats.correct >= 5
+    },
+    {
+        id: 'ten',
+        name: 'Mente afiada',
+        desc: 'Acerte 10 exercícios.',
+        icon: 'fa-star',
+        xp: 120,
+        rarity: 'Rara',
+        color: 'primary',
+        check: s => s.stats.correct >= 10
+    },
+    {
+        id: 'twentyfive',
+        name: 'Caçador de respostas',
+        desc: 'Acerte 25 exercícios.',
+        icon: 'fa-trophy',
+        xp: 250,
+        rarity: 'Épica',
+        color: 'secondary',
+        check: s => s.stats.correct >= 25
+    },
+    {
+        id: 'streak7',
+        name: 'Fogo aceso',
+        desc: 'Mantenha uma sequência de 7 dias.',
+        icon: 'fa-fire',
+        xp: 200,
+        rarity: 'Épica',
+        color: 'accent',
+        check: s => s.streak >= 7
+    },
+    {
+        id: 'level10',
+        name: 'Subindo de nível',
+        desc: 'Chegue ao nível 10.',
+        icon: 'fa-level-up-alt',
+        xp: 150,
+        rarity: 'Rara',
+        color: 'primary',
+        check: s => s.level >= 10
+    },
+    {
+        id: 'polymath',
+        name: 'Polímata',
+        desc: 'Estude 5 matérias diferentes.',
+        icon: 'fa-layer-group',
+        xp: 180,
+        rarity: 'Lendária',
+        color: 'secondary',
+        check: s => Object.keys(s.stats.subjects).length >= 5
+    },
+    {
+        id: 'perfect',
+        name: 'Resposta perfeita',
+        desc: 'Acerte 10 exercícios seguidos.',
+        icon: 'fa-bolt',
+        xp: 300,
+        rarity: 'Lendária',
+        color: 'accent',
+        check: s => s.stats.bestCombo >= 10
+    }
+];
+
+const DAILY_MISSIONS = [
+    {
+        id: 'daily3',
+        name: 'Aquecimento diário',
+        desc: 'Acerte 3 exercícios hoje.',
+        icon: 'fa-bullseye',
+        target: 3,
+        type: 'correct',
+        rewardXP: 80,
+        rewardCoins: 25
+    },
+    {
+        id: 'daily5',
+        name: 'Sessão focada',
+        desc: 'Resolva 5 exercícios hoje.',
+        icon: 'fa-book-open',
+        target: 5,
+        type: 'answered',
+        rewardXP: 110,
+        rewardCoins: 35
+    },
+    {
+        id: 'daily2subjects',
+        name: 'Passeio pelo conhecimento',
+        desc: 'Estude 2 matérias hoje.',
+        icon: 'fa-compass',
+        target: 2,
+        type: 'subjects',
+        rewardXP: 100,
+        rewardCoins: 30
+    }
+];
+
+const RANKING_BOTS = [
+    { name: 'Ana', base: 2840 },
+    { name: 'Lucas', base: 2510 },
+    { name: 'Beatriz', base: 2210 },
+    { name: 'Rafael', base: 1980 },
+    { name: 'Marina', base: 1760 },
+    { name: 'Gabriel', base: 1510 },
+    { name: 'Sofia', base: 1320 }
+];
+
+function defaultGame() {
+    return {
+        version: GAME_VERSION,
+        name: 'Estudante',
+        xp: 1250,
+        level: 15,
+        coins: 320,
+        streak: 4,
+        bestStreak: 4,
+        lastStudyDay: null,
+        stats: {
+            answered: 0,
+            correct: 0,
+            wrong: 0,
+            subjects: {},
+            combo: 0,
+            bestCombo: 0,
+            byDay: {}
+        },
+        unlocked: [],
+        history: [],
+        claimedMissions: [],
+        chests: {
+            small: 0,
+            medium: 0,
+            large: 0
+        },
+        lastChestAt: null,
+        notifications: []
+    };
+}
+
+function migrateGame() {
+    let s = null;
+
+    try {
+        s = JSON.parse(localStorage.getItem(GAME_KEY) || 'null');
+    } catch (e) {}
+
+    if (s && s.version === GAME_VERSION) {
+        return s;
+    }
+
+    let old = null;
+
+    try {
+        old = JSON.parse(localStorage.getItem(OLD_GAME_KEY) || 'null');
+    } catch (e) {}
+
+    if (old) {
+        const n = defaultGame();
+
+        Object.assign(n, {
+            name: old.name || n.name,
+            xp: old.xp || n.xp,
+            level: old.level || n.level,
+            coins: old.coins || n.coins,
+            streak: old.streak || n.streak,
+            bestStreak: old.bestStreak || n.bestStreak,
+            lastStudyDay: old.lastStudyDay || null,
+            unlocked: old.unlocked || [],
+            history: old.history || []
+        });
+
+        n.stats = Object.assign(n.stats, old.stats || {});
+        n.stats.subjects = n.stats.subjects || {};
+
+        return n;
+    }
+
+    return defaultGame();
+}
+
+let game = migrateGame();
+
+function saveGame() {
+    localStorage.setItem(GAME_KEY, JSON.stringify(game));
+
+    localStorage.setItem(
+        'usuario',
+        JSON.stringify({
+            xp: game.xp,
+            nivel: game.level,
+            nome: game.name,
+            moedas: game.coins
+        })
+    );
+
+    window.dispatchEvent(
+        new CustomEvent('aprendi:state', { detail: game })
+    );
+}
+
+function levelInfo(xp) {
+    const base = 1250;
+    const level = 15 + Math.floor(Math.max(0, xp - base) / 250);
+    const current = xp - (base + (level - 15) * 250);
+
+    return {
+        level,
+        current: Math.max(0, current),
+        needed: 250,
+        percent: Math.min(100, Math.max(0, current) / 250 * 100)
+    };
+}
+
+function refreshLevel() {
+    game.level = levelInfo(game.xp).level;
+}
+
+function todayKey() {
+    const d = new Date();
+
+    return d.getFullYear() + '-' +
+        String(d.getMonth() + 1).padStart(2, '0') + '-' +
+        String(d.getDate()).padStart(2, '0');
+}
+
+function ensureDay() {
+    const k = todayKey();
+
+    if (!game.stats.byDay[k]) {
+        game.stats.byDay[k] = {
+            answered: 0,
+            correct: 0,
+            subjects: {}
+        };
+    }
+
+    return k;
+}
+
+function updateStreak() {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
+    const key = todayKey();
+
+    if (game.lastStudyDay === key) {
+        return;
+    }
+
+    const last = game.lastStudyDay
+        ? new Date(game.lastStudyDay + 'T00:00:00')
+        : null;
+
+    if (last) {
+        const diff = Math.round((today - last) / 86400000);
+        game.streak = diff === 1 ? game.streak + 1 : 1;
+    } else {
+        game.streak = 1;
+    }
+
+    game.bestStreak = Math.max(game.bestStreak, game.streak);
+    game.lastStudyDay = key;
+}
+
+function playSound(kind = 'achievement') {
+    try {
+        const C = window.AudioContext || window.webkitAudioContext;
+
+        if (!C) {
+            return;
+        }
+
+        const c = new C();
+        const t = c.currentTime;
+
+        let notes = kind === 'level'
+            ? [261.6, 329.6, 392, 523.3, 659.3, 783.99]
+            : kind === 'coin'
+                ? [659.3, 987.8]
+                : [523.25, 659.25, 783.99, 1046.5];
+
+        notes.forEach((f, i) => {
+            const o = c.createOscillator();
+            const g = c.createGain();
+            const d = i * 0.1;
+
+            o.type = 'sine';
+            o.frequency.value = f;
+
+            g.gain.setValueAtTime(0.0001, t + d);
+            g.gain.exponentialRampToValueAtTime(0.12, t + d + 0.02);
+            g.gain.exponentialRampToValueAtTime(0.0001, t + d + 0.28);
+
+            o.connect(g);
+            g.connect(c.destination);
+
+            o.start(t + d);
+            o.stop(t + d + 0.3);
+        });
+
+        setTimeout(() => c.close(), 1200);
+    } catch (e) {}
+}
+
+function showXP(amount) {
+    if (!amount) {
+        return;
+    }
+
+    const e = document.createElement('div');
+    e.className = 'gam-xp-float';
+    e.innerHTML = `<i class="fas fa-bolt"></i> +${amount} XP`;
+
+    document.body.appendChild(e);
+
+    setTimeout(() => e.remove(), 1400);
+}
+
+function showCoins(amount) {
+    if (!amount) {
+        return;
+    }
+
+    const e = document.createElement('div');
+    e.className = 'gam-coin-float';
+    e.innerHTML = `<i class="fas fa-coins"></i> +${amount}`;
+
+    document.body.appendChild(e);
+
+    playSound('coin');
+
+    setTimeout(() => e.remove(), 1400);
+}
+
+function showAchievement(a) {
+    const old = document.querySelector('.gam-achievement');
+
+    if (old) {
+        old.remove();
+    }
+
+    const e = document.createElement('div');
+    e.className = 'gam-achievement';
+
+    e.innerHTML = `
+        <div class="gam-achievement-icon ${a.color}">
+            <i class="fas ${a.icon}"></i>
+        </div>
+        <div class="gam-achievement-copy">
+            <small>CONQUISTA DESBLOQUEADA</small>
+            <b>${a.name}</b>
+            <span>${a.desc}</span>
+            <em>${a.rarity} • +${a.xp} XP</em>
+        </div>
+    `;
+
+    document.body.appendChild(e);
+
+    requestAnimationFrame(() => e.classList.add('show'));
+
+    playSound();
+
+    setTimeout(() => e.remove(), 6200);
+}
+
+function showLevelUp(level) {
+    const old = document.querySelector('.gam-levelup');
+
+    if (old) {
+        old.remove();
+    }
+
+    const e = document.createElement('div');
+    e.className = 'gam-levelup';
+
+    e.innerHTML = `
+        <div class="levelup-glow"></div>
+        <div class="levelup-card">
+            <div class="levelup-icon">
+                <i class="fas fa-arrow-up"></i>
+            </div>
+            <small>EVOLUÇÃO</small>
+            <h2>NÍVEL ${level}</h2>
+            <p>Você avançou na sua jornada de estudos.</p>
+            <div class="levelup-line"></div>
+            <span>Continue assim.</span>
+            <button onclick="this.closest('.gam-levelup').remove()">
+                CONTINUAR
+            </button>
+        </div>
+    `;
+
+    document.body.appendChild(e);
+
+    playSound('level');
+}
+
+function checkAchievements() {
+    const gains = [];
+
+    ACHIEVEMENTS.forEach(a => {
+        if (!game.unlocked.includes(a.id) && a.check(game)) {
+            game.unlocked.push(a.id);
+            game.xp += a.xp;
+            gains.push(a);
+        }
+    });
+
+    refreshLevel();
+
+    return gains;
+}
+
+function missionState(m) {
+    const day = game.stats.byDay[todayKey()] || {
+        answered: 0,
+        correct: 0,
+        subjects: {}
+    };
+
+    let value = 0;
+
+    if (m.type === 'correct') {
+        value = day.correct;
+    }
+
+    if (m.type === 'answered') {
+        value = day.answered;
+    }
+
+    if (m.type === 'subjects') {
+        value = Object.keys(day.subjects || {}).length;
+    }
+
+    return {
+        value,
+        target: m.target,
+        done: value >= m.target,
+        claimed: game.claimedMissions.includes(todayKey() + ':' + m.id)
+    };
+}
+
+function checkDailyMissions() {
+    const rewards = [];
+
+    DAILY_MISSIONS.forEach(m => {
+        const st = missionState(m);
+        const key = todayKey() + ':' + m.id;
+
+        if (st.done && !game.claimedMissions.includes(key)) {
+            game.claimedMissions.push(key);
+            game.xp += m.rewardXP;
+            game.coins += m.rewardCoins;
+            rewards.push(m);
+        }
+    });
+
+    refreshLevel();
+
+    return rewards;
+}
+
+function chestForXP(xp) {
+    if (xp >= 300) {
+        return 'large';
+    }
+
+    if (xp >= 150) {
+        return 'medium';
+    }
+
+    return 'small';
+}
+
+function addChest() {
+    const type = chestForXP(250);
+    game.chests[type]++;
+}
+
+function registerAnswer(materiaId, exercicioId, correct, pontos) {
+    const key = `${materiaId}:${exercicioId}`;
+
+    if (game.history.some(h => h.key === key)) {
+        return { duplicate: true };
+    }
+
+    const oldLevel = game.level;
+    const day = ensureDay();
+
+    game.history.push({
+        key,
+        materiaId,
+        exercicioId,
+        correct,
+        pontos: correct ? pontos : 0,
+        at: new Date().toISOString()
+    });
+
+    game.stats.answered++;
+    game.stats[correct ? 'correct' : 'wrong']++;
+
+    game.stats.subjects[materiaId] =
+        (game.stats.subjects[materiaId] || 0) + 1;
+
+    game.stats.byDay[day].answered++;
+    game.stats.byDay[day].subjects[materiaId] = true;
+
+    if (correct) {
+        game.stats.combo++;
+
+        game.stats.bestCombo = Math.max(
+            game.stats.bestCombo,
+            game.stats.combo
+        );
+
+        game.stats.byDay[day].correct++;
+        game.xp += pontos;
+
+        const coins = Math.max(2, Math.floor(pontos / 5));
+
+        game.coins += coins;
+    } else {
+        game.stats.combo = 0;
+    }
+
+    updateStreak();
+    refreshLevel();
+
+    const gains = checkAchievements();
+    const missions = checkDailyMissions();
+
+    let chestEarned = false;
+
+    if (correct && game.stats.correct % 3 === 0) {
+        game.chests.small++;
+        chestEarned = true;
+    }
+
+    refreshLevel();
+
+    const leveled = game.level > oldLevel;
+
+    if (leveled) {
+        showLevelUp(game.level);
+    }
+
+    if (correct) {
+        showXP(pontos);
+        showCoins(Math.max(2, Math.floor(pontos / 5)));
+    }
+
+    gains.forEach((a, i) => {
+        setTimeout(() => showAchievement(a), 700 + i * 6400);
+    });
+
+    missions.forEach((m, i) => {
+        setTimeout(() => showMissionComplete(m), 800 + i * 1800);
+    });
+
+    if (chestEarned) {
+        setTimeout(() => showChestEarned(), 700);
+    }
+
+    if (correct) {
+        logEvent(
+            'xp',
+            'Acertou uma questão de ' + nomeMateria(materiaId),
+            pontos
+        );
+    }
+
+    gains.forEach(a => {
+        logEvent('achievement', 'Conquista: ' + a.name, a.xp);
+    });
+
+    missions.forEach(m => {
+        logEvent('mission', 'Missão: ' + m.name, m.rewardXP);
+    });
+
+    if (leveled) {
+        logEvent('level', 'Subiu para o nível ' + game.level, 0);
+    }
+
+    if (chestEarned) {
+        logEvent('chest', 'Ganhou um baú pequeno', 0);
+    }
+
+    saveGame();
+    smartAuto('quiz');
+    renderGameHub();
+
+    return {
+        duplicate: false,
+        xpGained: correct ? pontos : 0,
+        coinsGained: correct ? Math.max(2, Math.floor(pontos / 5)) : 0,
+        achievements: gains,
+        missions,
+        level: game.level,
+        leveled
+    };
+}
+
+function showMissionComplete(m) {
+    const e = document.createElement('div');
+    e.className = 'gam-mission-pop';
+
+    e.innerHTML = `
+        <i class="fas ${m.icon}"></i>
+        <div>
+            <small>MISSÃO DIÁRIA CONCLUÍDA</small>
+            <b>${m.name}</b>
+            <span>+${m.rewardXP} XP • +${m.rewardCoins} moedas</span>
+        </div>
+    `;
+
+    document.body.appendChild(e);
+
+    requestAnimationFrame(() => e.classList.add('show'));
+
+    setTimeout(() => e.remove(), 4000);
+}
+
+function showChestEarned() {
+    const e = document.createElement('div');
+    e.className = 'gam-mission-pop';
+
+    e.innerHTML = `
+        <i class="fas fa-gift"></i>
+        <div>
+            <small>BAÚ RECEBIDO</small>
+            <b>Baú pequeno</b>
+            <span>Abra no seu Perfil para ganhar recompensas.</span>
+        </div>
+    `;
+
+    document.body.appendChild(e);
+
+    requestAnimationFrame(() => e.classList.add('show'));
+
+    setTimeout(() => e.remove(), 4200);
+}
+
+function openChest(type) {
+    if (!game.chests[type]) {
+        return;
+    }
+
+    const rewards = {
+        small: { xp: 35, coins: 15 },
+        medium: { xp: 90, coins: 40 },
+        large: { xp: 180, coins: 85 }
+    }[type];
+
+    game.chests[type]--;
+
+    logEvent('chest', 'Abriu um baú', rewards.xp);
+
+    game.xp += rewards.xp;
+    game.coins += rewards.coins;
+
+    refreshLevel();
+    saveGame();
+
+    showXP(rewards.xp);
+    showCoins(rewards.coins);
+    showChest(type, rewards);
+}
+
+function showChest(type, r) {
+    const e = document.createElement('div');
+    e.className = 'gam-chest-modal';
+
+    e.innerHTML = `
+        <div class="chest-card">
+            <div class="chest-box">
+                <i class="fas fa-gift"></i>
+            </div>
+            <small>BAÚ ABERTO</small>
+            <h2>Recompensa!</h2>
+            <p>Você encontrou uma recompensa especial.</p>
+            <div class="chest-rewards">
+                <strong>+${r.xp} XP</strong>
+                <strong>
+                    <i class="fas fa-coins"></i> +${r.coins}
+                </strong>
+            </div>
+            <button onclick="this.closest('.gam-chest-modal').remove()">
+                COLETAR
+            </button>
+        </div>
+    `;
+
+    document.body.appendChild(e);
+
+    playSound('achievement');
+}
+
+function rankingData() {
+    const arr = RANKING_BOTS.map((b, i) => ({
+        name: b.name,
+        xp: b.base + Math.max(0, game.stats.correct * 8 - i * 17),
+        level: levelInfo(b.base).level
+    }));
+
+    arr.push({
+        name: game.name || 'Você',
+        xp: game.xp,
+        level: game.level,
+        self: true
+    });
+
+    return arr.sort((a, b) => b.xp - a.xp);
+}
+
+window.GameState = {
+    get: () => game,
+    answer: registerAnswer,
+    achievements: ACHIEVEMENTS,
+    missions: DAILY_MISSIONS,
+    ranking: rankingData,
+    openChest,
+    save: saveGame
+};
+
+function logEvent(type, text, xp) {
+    game.log = game.log || [];
+
+    game.log.unshift({
+        t: Date.now(),
+        type,
+        text,
+        xp: xp || 0
+    });
+
+    if (game.log.length > 40) {
+        game.log.length = 40;
+    }
+}
+
+function nomeMateria(id) {
+    try {
+        return API.getMateria(id).nome;
+    } catch (e) {
+        return id;
+    }
+}
+
+function smartAuto(key) {
+    try {
+        const d = smartLoad();
+        const t = smartToday();
+
+        d.plans[t] = d.plans[t] || {};
+
+        if (key) {
+            d.plans[t][key] = true;
+        }
+
+        if (key === 'review' && !d.reviewDays.includes(t)) {
+            d.reviewDays.push(t);
+        }
+
+        if (!d.studyDays.includes(t)) {
+            d.studyDays.push(t);
+        }
+
+        smartSave(d);
+        smartRender();
+    } catch (e) {}
+}
+
+function smartStudied(d, x) {
+    return d.studyDays.includes(x) ||
+        !!(game.stats.byDay[x] && game.stats.byDay[x].answered > 0);
+}
+
+function publicarCatalogo() {
+    try {
+        const c = {};
+
+        API.getMaterias().forEach(m => {
+            const quiz = m.resumos.reduce(
+                (n, r) => n + (QUIZZES_CONTEUDO[r.id] || []).length,
+                0
+            );
+
+            c[m.id] = {
+                nome: m.nome,
+                icone: m.icone,
+                cor: m.cor,
+                resumos: m.resumos.length,
+                total: m.exercicios.length + quiz
+            };
+        });
+
+        localStorage.setItem('aprendi_catalogo_v1', JSON.stringify(c));
+    } catch (e) {}
+}
+
+function sincronizarComPerfil() {
+    game = migrateGame();
+
+    try {
+        document.getElementById('user-points').textContent =
+            game.xp.toLocaleString('pt-BR') + ' XP';
+
+        renderGameHub();
+        smartRender();
+    } catch (e) {}
+}
+
+window.addEventListener('storage', e => {
+    if (e.key === GAME_KEY || e.key === SMART_KEY) {
+        sincronizarComPerfil();
+    }
+});
+
+window.addEventListener('aprendi:state', () => {
+    if (typeof renderGame === 'function') {
+        renderGame();
+    }
+});
+</script>
+</body>
+</html>

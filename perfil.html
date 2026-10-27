@@ -1,0 +1,2801 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Perfil - Aprendi+</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+* {
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif
+}
+
+:root {
+  --primary:#6a11cb;
+  --secondary:#2575fc;
+  --accent:#ffcc00;
+  --success:#2ecc71;
+  --warning:#f39c12;
+  --light:#f8f9fa;
+  --text:#333;
+  --text-light:#6c757d
+}
+
+body {
+  background:#f5f7fb;
+  color:var(--text);
+  line-height:1.6
+}
+
+header {
+  background:linear-gradient(135deg,var(--primary),var(--secondary));
+  color:#fff;
+  padding:15px 0;
+  position:sticky;
+  top:0;
+  z-index:100;
+  box-shadow:0 2px 10px rgba(0,0,0,.1)
+}
+
+.header-container {
+  max-width:1200px;
+  margin:0 auto;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:0 20px;
+  flex-wrap:wrap;
+  gap:12px
+}
+
+.logo {
+  display:flex;
+  align-items:center;
+  font-size:1.8rem;
+  font-weight:800;
+  text-decoration:none;
+  color:#fff
+}
+
+.logo span {
+  color:var(--accent)
+}
+
+.logo i {
+  margin-right:10px
+}
+
+nav ul {
+  display:flex;
+  list-style:none;
+  gap:8px;
+  flex-wrap:wrap
+}
+
+nav ul li a {
+  color:#fff;
+  text-decoration:none;
+  font-weight:500;
+  padding:6px 16px;
+  border-radius:30px;
+  transition:.2s
+}
+
+nav ul li a:hover,
+nav ul li a.active {
+  background:rgba(255,255,255,.15)
+}
+
+.user-actions {
+  display:flex;
+  align-items:center;
+  gap:12px
+}
+
+.user-points {
+  background:rgba(255,255,255,.2);
+  padding:6px 16px;
+  border-radius:30px;
+  display:flex;
+  align-items:center;
+  gap:6px
+}
+
+.user-points i {
+  color:var(--accent)
+}
+
+.btn {
+  padding:8px 22px;
+  border-radius:30px;
+  font-weight:600;
+  cursor:pointer;
+  transition:.2s;
+  text-decoration:none;
+  display:inline-block;
+  border:none
+}
+
+.btn-primary {
+  background:#fff;
+  color:var(--primary)
+}
+
+.btn-primary:hover {
+  transform:translateY(-2px);
+  box-shadow:0 6px 18px rgba(0,0,0,.15)
+}
+
+.page-header {
+  background:linear-gradient(135deg,rgba(106,17,203,.9),rgba(37,117,252,.9));
+  color:#fff;
+  padding:44px 20px 38px;
+  text-align:center
+}
+
+.page-header h1 {
+  font-size:2.5rem;
+  margin-bottom:8px
+}
+
+.page-header p {
+  font-size:1.1rem;
+  opacity:.9
+}
+
+.head-chips {
+  display:flex;
+  gap:10px;
+  justify-content:center;
+  flex-wrap:wrap;
+  margin-top:18px
+}
+
+.chip {
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  background:rgba(255,255,255,.18);
+  padding:7px 16px;
+  border-radius:30px;
+  font-size:.9rem;
+  font-weight:600
+}
+
+.chip.sync i {
+  color:#7dffb0
+}
+
+.chip.pulse i {
+  animation:spin .9s linear
+}
+
+@keyframes spin {
+  to {
+    transform:rotate(360deg)
+  }
+}
+
+.main-content {
+  max-width:1200px;
+  margin:34px auto;
+  padding:0 20px;
+  display:grid;
+  grid-template-columns:330px 1fr;
+  gap:28px;
+  align-items:start
+}
+
+.card,
+.character-card {
+  background:#fff;
+  border-radius:15px;
+  padding:24px;
+  box-shadow:0 5px 20px rgba(0,0,0,.05)
+}
+
+.character-card {
+  text-align:center;
+  position:sticky;
+  top:92px
+}
+
+.avatar-wrap {
+  position:relative;
+  width:150px;
+  height:150px;
+  margin:0 auto 14px
+}
+
+.level-ring {
+  width:150px;
+  height:150px;
+  border-radius:50%;
+  background:conic-gradient(var(--accent) var(--p,0%),#e9ecef 0);
+  display:grid;
+  place-items:center
+}
+
+.character-avatar {
+  width:130px;
+  height:130px;
+  border-radius:50%;
+  background:linear-gradient(135deg,var(--primary),var(--secondary));
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  color:#fff;
+  font-size:3.6rem;
+  border:4px solid #fff
+}
+
+.level-badge {
+  position:absolute;
+  right:-4px;
+  bottom:2px;
+  background:var(--accent);
+  color:#3b2a00;
+  font-weight:900;
+  border-radius:20px;
+  padding:3px 12px;
+  font-size:.85rem;
+  border:3px solid #fff
+}
+
+.name-row {
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:8px
+}
+
+.character-name {
+  font-size:1.5rem;
+  font-weight:700;
+  color:var(--primary)
+}
+
+.icon-btn {
+  border:0;
+  background:var(--light);
+  width:30px;
+  height:30px;
+  border-radius:50%;
+  cursor:pointer;
+  color:var(--text-light);
+  transition:.2s
+}
+
+.icon-btn:hover {
+  background:#e9ecef;
+  color:var(--primary)
+}
+
+.character-class {
+  color:var(--text-light);
+  margin-bottom:16px;
+  font-style:italic
+}
+
+.xp-head {
+  display:flex;
+  justify-content:space-between;
+  font-weight:700;
+  color:var(--primary);
+  font-size:.95rem;
+  margin-bottom:6px
+}
+
+.xp-bar {
+  height:14px;
+  background:#e9ecef;
+  border-radius:20px;
+  overflow:hidden;
+  box-shadow:inset 0 1px 3px rgba(0,0,0,.1)
+}
+
+.xp-progress {
+  height:100%;
+  width:0;
+  border-radius:20px;
+  background:linear-gradient(90deg,var(--primary),var(--secondary));
+  transition:width 1s cubic-bezier(.2,.8,.2,1)
+}
+
+.xp-text {
+  font-size:.85rem;
+  color:var(--text-light);
+  margin:8px 0 14px
+}
+
+.pill-row {
+  display:flex;
+  gap:8px;
+  justify-content:center;
+  flex-wrap:wrap;
+  margin-bottom:16px
+}
+
+.pill {
+  display:inline-flex;
+  align-items:center;
+  gap:7px;
+  padding:7px 13px;
+  border-radius:20px;
+  font-weight:800;
+  font-size:.9rem
+}
+
+.pill.coins {
+  background:rgba(255,204,0,.14);
+  color:#9b7200
+}
+
+.pill.fire {
+  background:rgba(243,156,18,.13);
+  color:#c66d00
+}
+
+.mini-stats {
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+  margin-bottom:18px
+}
+
+.mini-stat {
+  background:var(--light);
+  border-radius:12px;
+  padding:12px 8px
+}
+
+.mini-stat b {
+  display:block;
+  font-size:1.4rem;
+  color:var(--primary);
+  line-height:1.1
+}
+
+.mini-stat span {
+  font-size:.75rem;
+  color:var(--text-light);
+  font-weight:600
+}
+
+.go-btn {
+  display:block;
+  text-decoration:none;
+  text-align:center;
+  border:0;
+  border-radius:30px;
+  padding:11px 20px;
+  font-weight:800;
+  color:#fff;
+  background:linear-gradient(135deg,var(--primary),var(--secondary));
+  cursor:pointer;
+  transition:.2s
+}
+
+.go-btn:hover {
+  transform:translateY(-2px);
+  box-shadow:0 8px 20px rgba(106,17,203,.3)
+}
+
+.content-area {
+  display:flex;
+  flex-direction:column;
+  gap:24px;
+  min-width:0
+}
+
+.section-title {
+  font-size:1.35rem;
+  color:var(--primary);
+  margin-bottom:6px;
+  display:flex;
+  align-items:center;
+  gap:10px
+}
+
+.section-sub {
+  color:var(--text-light);
+  font-size:.9rem;
+  margin-bottom:16px
+}
+
+.section-title .count {
+  margin-left:auto;
+  font-size:.8rem;
+  background:var(--light);
+  color:var(--text-light);
+  padding:3px 12px;
+  border-radius:20px
+}
+
+.smart-grid {
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:14px
+}
+
+.smart-box {
+  background:var(--light);
+  border-radius:14px;
+  padding:16px;
+  display:flex;
+  flex-direction:column;
+  gap:8px
+}
+
+.smart-label {
+  font-size:.68rem;
+  letter-spacing:1.4px;
+  font-weight:800;
+  color:var(--text-light)
+}
+
+.smart-box h3 {
+  font-size:1.02rem
+}
+
+.plan-checks {
+  display:flex;
+  flex-direction:column;
+  gap:8px;
+  font-size:.9rem
+}
+
+.plan-checks label {
+  display:flex;
+  gap:8px;
+  align-items:center;
+  cursor:pointer
+}
+
+.plan-checks input {
+  width:17px;
+  height:17px;
+  accent-color:var(--primary)
+}
+
+.plan-progress {
+  font-weight:800;
+  color:var(--primary);
+  font-size:.85rem
+}
+
+.big-num {
+  font-size:1.9rem;
+  font-weight:900;
+  color:var(--primary);
+  line-height:1
+}
+
+.big-num small {
+  font-size:.8rem;
+  color:var(--text-light);
+  font-weight:600;
+  display:block;
+  margin-top:4px
+}
+
+.week-dots {
+  display:flex;
+  gap:6px
+}
+
+.week-dot {
+  width:30px;
+  height:30px;
+  border-radius:50%;
+  background:#e1e5ec;
+  color:#8a92a3;
+  display:grid;
+  place-items:center;
+  font-size:.72rem;
+  font-weight:800
+}
+
+.week-dot.done {
+  background:linear-gradient(135deg,var(--primary),var(--secondary));
+  color:#fff
+}
+
+.week-dot.today {
+  outline:2px solid var(--accent);
+  outline-offset:2px
+}
+
+.sbtn {
+  border:0;
+  border-radius:30px;
+  padding:8px 14px;
+  font-weight:700;
+  font-size:.82rem;
+  cursor:pointer;
+  background:#fff;
+  color:var(--primary);
+  border:1.5px solid rgba(106,17,203,.25);
+  transition:.2s;
+  text-decoration:none;
+  text-align:center;
+  display:inline-block
+}
+
+.sbtn:hover {
+  background:var(--primary);
+  color:#fff
+}
+
+.sbtn:disabled {
+  opacity:.55;
+  cursor:default
+}
+
+.sbtn:disabled:hover {
+  background:#fff;
+  color:var(--primary)
+}
+
+.tip {
+  display:flex;
+  gap:12px;
+  align-items:center;
+  margin-top:14px;
+  background:#fff8e8;
+  border-left:4px solid #ffbd45;
+  border-radius:10px;
+  padding:12px 14px;
+  font-size:.9rem
+}
+
+.tip>i {
+  color:#e09a1a;
+  font-size:1.2rem
+}
+
+.tip div {
+  flex:1
+}
+
+.tip b {
+  display:block
+}
+
+.quest-item {
+  display:flex;
+  align-items:center;
+  gap:14px;
+  padding:14px 0;
+  border-bottom:1px solid #eee
+}
+
+.quest-item:last-child {
+  border-bottom:0;
+  padding-bottom:0
+}
+
+.quest-icon {
+  width:42px;
+  height:42px;
+  border-radius:50%;
+  background:var(--light);
+  display:grid;
+  place-items:center;
+  color:var(--primary);
+  flex:none
+}
+
+.quest-info {
+  flex:1;
+  min-width:0
+}
+
+.quest-name {
+  font-weight:700
+}
+
+.quest-desc {
+  font-size:.85rem;
+  color:var(--text-light)
+}
+
+.quest-reward {
+  font-size:.78rem;
+  color:#b58500;
+  font-weight:700
+}
+
+.quest-progress {
+  font-weight:800;
+  min-width:42px;
+  text-align:right
+}
+
+.mini-bar {
+  height:7px;
+  background:#e9ecef;
+  border-radius:5px;
+  overflow:hidden;
+  margin-top:6px
+}
+
+.mini-bar span {
+  display:block;
+  height:100%;
+  border-radius:5px;
+  background:linear-gradient(90deg,var(--primary),var(--secondary));
+  transition:width .6s
+}
+
+.quest-complete .quest-icon {
+  background:#e6f9ee;
+  color:#1f9d55
+}
+
+.quest-complete .mini-bar span {
+  background:#35b97f
+}
+
+.two-col {
+  display:grid;
+  grid-template-columns:1.15fr 1fr;
+  gap:24px
+}
+
+.feed {
+  display:flex;
+  flex-direction:column;
+  gap:2px;
+  max-height:330px;
+  overflow:auto;
+  padding-right:4px
+}
+
+.feed-item {
+  display:flex;
+  gap:12px;
+  align-items:center;
+  padding:10px 0;
+  border-bottom:1px solid #f0f1f5
+}
+
+.feed-item:last-child {
+  border-bottom:0
+}
+
+.feed-icon {
+  width:36px;
+  height:36px;
+  border-radius:50%;
+  display:grid;
+  place-items:center;
+  flex:none;
+  font-size:.9rem;
+  color:#fff;
+  background:var(--primary)
+}
+
+.feed-icon.xp {
+  background:linear-gradient(135deg,#ffb52e,#f39c12)
+}
+
+.feed-icon.achievement {
+  background:linear-gradient(135deg,var(--primary),var(--secondary))
+}
+
+.feed-icon.mission {
+  background:#2ecc71
+}
+
+.feed-icon.level {
+  background:#e74c3c
+}
+
+.feed-icon.chest {
+  background:#c58a45
+}
+
+.feed-icon.study {
+  background:#3498db
+}
+
+.feed-text {
+  flex:1;
+  min-width:0;
+  font-size:.9rem;
+  font-weight:600
+}
+
+.feed-text small {
+  display:block;
+  color:var(--text-light);
+  font-weight:500;
+  font-size:.75rem
+}
+
+.feed-xp {
+  font-weight:800;
+  color:#b58500;
+  font-size:.85rem;
+  white-space:nowrap
+}
+
+.empty {
+  text-align:center;
+  padding:26px 10px;
+  color:var(--text-light);
+  font-size:.92rem
+}
+
+.wk {
+  display:flex;
+  gap:8px;
+  align-items:flex-end;
+  height:170px
+}
+
+.wk-col {
+  flex:1;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:4px;
+  height:100%
+}
+
+.wk-bars {
+  flex:1;
+  width:100%;
+  display:flex;
+  align-items:flex-end;
+  justify-content:center
+}
+
+.wk-a {
+  width:70%;
+  max-width:34px;
+  min-height:4px;
+  background:#d9dcf5;
+  border-radius:8px 8px 3px 3px;
+  display:flex;
+  align-items:flex-end;
+  overflow:hidden
+}
+
+.wk-c {
+  display:block;
+  width:100%;
+  background:linear-gradient(180deg,var(--secondary),var(--primary))
+}
+
+.wk-col b {
+  font-size:.8rem;
+  color:var(--primary)
+}
+
+.wk-col small {
+  font-size:.7rem;
+  color:var(--text-light);
+  text-transform:uppercase;
+  font-weight:700
+}
+
+.wk-col.today small {
+  color:#b58500
+}
+
+.legend {
+  display:flex;
+  gap:14px;
+  font-size:.75rem;
+  color:var(--text-light);
+  margin-top:12px
+}
+
+.legend i {
+  display:inline-block;
+  width:10px;
+  height:10px;
+  border-radius:3px;
+  margin-right:5px
+}
+
+.ach-grid {
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(190px,1fr));
+  gap:14px
+}
+
+.ach {
+  background:var(--light);
+  border-radius:14px;
+  padding:16px;
+  position:relative;
+  transition:transform .25s
+}
+
+.ach:hover {
+  transform:translateY(-4px)
+}
+
+.ach.locked .ach-ico {
+  filter:grayscale(1);
+  opacity:.55
+}
+
+.ach-ico {
+  width:54px;
+  height:54px;
+  border-radius:50%;
+  background:linear-gradient(135deg,var(--primary),var(--secondary));
+  display:grid;
+  place-items:center;
+  color:#fff;
+  font-size:1.4rem;
+  margin-bottom:10px
+}
+
+.ach-ico.accent {
+  background:linear-gradient(135deg,var(--accent),var(--warning));
+  color:#3b2a00
+}
+
+.ach h4 {
+  font-size:.98rem
+}
+
+.ach p {
+  font-size:.8rem;
+  color:var(--text-light);
+  margin:2px 0 8px
+}
+
+.ach .meta {
+  display:flex;
+  justify-content:space-between;
+  font-size:.72rem;
+  font-weight:800;
+  color:var(--text-light)
+}
+
+.ach .meta .r-Lendária {
+  color:#c66d00
+}
+
+.ach .meta .r-Épica {
+  color:#8e44ad
+}
+
+.ach .meta .r-Rara {
+  color:#2575fc
+}
+
+.ach.on {
+  background:linear-gradient(135deg,rgba(106,17,203,.06),rgba(37,117,252,.08));
+  border:1px solid rgba(106,17,203,.15)
+}
+
+.new-tag {
+  position:absolute;
+  top:10px;
+  right:10px;
+  background:#e74c3c;
+  color:#fff;
+  font-size:.62rem;
+  font-weight:900;
+  letter-spacing:1px;
+  padding:3px 8px;
+  border-radius:20px;
+  animation:gamPulse 1.4s infinite
+}
+
+.subj-grid {
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(230px,1fr));
+  gap:14px
+}
+
+.subj {
+  background:var(--light);
+  border-radius:14px;
+  padding:16px;
+  border-left:5px solid var(--c,#6a11cb)
+}
+
+.subj-head {
+  display:flex;
+  align-items:center;
+  gap:10px;
+  margin-bottom:10px
+}
+
+.subj-head i {
+  font-size:1.4rem;
+  color:var(--c)
+}
+
+.subj-head b {
+  flex:1
+}
+
+.subj-head span {
+  font-weight:900;
+  color:var(--c)
+}
+
+.subj small {
+  display:block;
+  color:var(--text-light);
+  font-size:.78rem;
+  margin-top:6px
+}
+
+.subj .mini-bar span {
+  background:var(--c)
+}
+
+.chest-grid {
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:12px
+}
+
+.chest-item {
+  border:1px solid #e5e7ef;
+  background:var(--light);
+  border-radius:14px;
+  padding:16px 8px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:6px;
+  cursor:pointer;
+  font-weight:700;
+  transition:.2s;
+  color:var(--text)
+}
+
+.chest-item i {
+  font-size:1.9rem;
+  color:#c58a45
+}
+
+.chest-item b {
+  font-size:1.1rem;
+  color:var(--primary)
+}
+
+.chest-item.available:hover {
+  transform:translateY(-3px);
+  border-color:var(--primary)
+}
+
+.chest-item:disabled {
+  opacity:.45;
+  cursor:default
+}
+
+.rank-row {
+  display:grid;
+  grid-template-columns:34px 1fr auto auto;
+  gap:12px;
+  align-items:center;
+  padding:10px 12px;
+  border-radius:12px;
+  font-size:.92rem
+}
+
+.rank-row:nth-child(odd) {
+  background:var(--light)
+}
+
+.rank-row.self {
+  background:linear-gradient(90deg,rgba(106,17,203,.12),rgba(37,117,252,.1));
+  font-weight:800;
+  outline:1.5px solid rgba(106,17,203,.3)
+}
+
+.rank-pos {
+  font-weight:900;
+  color:var(--primary)
+}
+
+.rank-row small {
+  background:var(--primary);
+  color:#fff;
+  border-radius:10px;
+  padding:1px 7px;
+  font-size:.62rem;
+  margin-left:6px;
+  vertical-align:middle
+}
+
+.rank-level {
+  color:var(--text-light);
+  font-size:.8rem
+}
+
+footer {
+  background:linear-gradient(135deg,var(--primary),var(--secondary));
+  color:#fff;
+  padding:40px 20px 20px;
+  margin-top:30px
+}
+
+.footer-content {
+  max-width:1200px;
+  margin:0 auto;
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+  gap:30px
+}
+
+.footer-column h3 {
+  margin-bottom:15px
+}
+
+.footer-column ul {
+  list-style:none
+}
+
+.footer-column ul li {
+  margin-bottom:8px
+}
+
+.footer-column ul li a {
+  color:rgba(255,255,255,.8);
+  text-decoration:none
+}
+
+.footer-column ul li a:hover {
+  color:#fff
+}
+
+.copyright {
+  text-align:center;
+  margin-top:40px;
+  padding-top:20px;
+  border-top:1px solid rgba(255,255,255,.1);
+  color:rgba(255,255,255,.7)
+}
+
+@media(max-width:968px) {
+  .main-content {
+    grid-template-columns:1fr
+  }
+
+  .character-card {
+    position:static
+  }
+
+  .smart-grid,
+  .two-col {
+    grid-template-columns:1fr
+  }
+}
+
+@media(max-width:768px) {
+  .header-container {
+    flex-direction:column;
+    text-align:center
+  }
+
+  .chest-grid {
+    grid-template-columns:1fr
+  }
+
+  .rank-row {
+    grid-template-columns:28px 1fr auto
+  }
+
+  .rank-level {
+    display:none
+  }
+}
+
+/* ===== GAMIFICAÇÃO V2 ===== */
+
+.gam-xp-float,
+.gam-coin-float {
+  position:fixed;
+  right:34px;
+  top:95px;
+  z-index:100000;
+  font-weight:900;
+  font-size:21px;
+  pointer-events:none;
+  text-shadow:0 3px 12px rgba(0,0,0,.35);
+  animation:gamFloat 1.35s ease-out forwards
+}
+
+.gam-xp-float {
+  color:var(--accent)
+}
+
+.gam-coin-float {
+  top:132px;
+  color:var(--accent)
+}
+
+.gam-achievement {
+  position:fixed;
+  right:22px;
+  bottom:22px;
+  width:410px;
+  min-height:112px;
+  background:linear-gradient(135deg,#151526,#20204a);
+  color:#fff;
+  border:1px solid rgba(106,17,203,.7);
+  border-left:5px solid var(--primary);
+  border-radius:10px;
+  z-index:100001;
+  display:flex;
+  align-items:center;
+  gap:16px;
+  padding:15px 18px;
+  box-shadow:0 20px 55px rgba(37,117,252,.25);
+  transform:translateX(120%);
+  opacity:0
+}
+
+.gam-achievement.show {
+  animation:gamAchievement 6.2s cubic-bezier(.18,.8,.22,1) forwards
+}
+
+.gam-achievement-icon {
+  width:70px;
+  height:70px;
+  min-width:70px;
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:28px;
+  color:#fff;
+  background:linear-gradient(135deg,var(--primary),var(--secondary));
+  box-shadow:0 0 0 4px rgba(106,17,203,.2),0 0 25px rgba(37,117,252,.3);
+  animation:gamBadge .7s .15s both
+}
+
+.gam-achievement-icon.accent {
+  background:linear-gradient(135deg,var(--accent),var(--warning));
+  color:#3b2a00
+}
+
+.gam-achievement-copy small {
+  display:block;
+  font-size:9px;
+  letter-spacing:1.7px;
+  color:#b9b9cc;
+  font-weight:800
+}
+
+.gam-achievement-copy b {
+  display:block;
+  font-size:19px;
+  margin-top:2px
+}
+
+.gam-achievement-copy span {
+  display:block;
+  font-size:12px;
+  color:#d3d3df;
+  margin-top:2px
+}
+
+.gam-achievement-copy em {
+  display:block;
+  font-size:11px;
+  color:var(--accent);
+  font-style:normal;
+  font-weight:800;
+  margin-top:5px
+}
+
+.gam-levelup {
+  position:fixed;
+  inset:0;
+  z-index:100002;
+  background:radial-gradient(circle at center,rgba(106,17,203,.25),rgba(10,10,20,.97) 58%);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  overflow:hidden;
+  animation:gamFade .3s ease
+}
+
+.levelup-glow {
+  position:absolute;
+  width:520px;
+  height:520px;
+  border-radius:50%;
+  background:radial-gradient(circle,rgba(37,117,252,.35),transparent 65%);
+  animation:gamPulse 1.5s infinite
+}
+
+.levelup-card {
+  position:relative;
+  text-align:center;
+  color:#fff;
+  width:min(470px,90vw);
+  padding:45px 30px;
+  border:1px solid rgba(255,255,255,.12);
+  border-radius:24px;
+  background:linear-gradient(145deg,rgba(22,22,45,.97),rgba(18,18,32,.97));
+  box-shadow:0 30px 90px rgba(0,0,0,.55)
+}
+
+.levelup-icon {
+  width:82px;
+  height:82px;
+  margin:0 auto 18px;
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:linear-gradient(135deg,var(--primary),var(--secondary));
+  font-size:34px;
+  box-shadow:0 0 35px rgba(37,117,252,.45);
+  animation:gamBadge .8s both
+}
+
+.levelup-card small {
+  letter-spacing:3px;
+  color:#bbb;
+  font-weight:800
+}
+
+.levelup-card h2 {
+  font-size:54px;
+  line-height:1;
+  margin:10px 0;
+  background:linear-gradient(90deg,var(--primary),var(--secondary));
+  -webkit-background-clip:text;
+  color:transparent
+}
+
+.levelup-card p {
+  color:#c5c5d0
+}
+
+.levelup-line {
+  height:2px;
+  background:linear-gradient(90deg,transparent,var(--secondary),transparent);
+  margin:22px 0
+}
+
+.levelup-card span {
+  color:#aaa;
+  font-size:13px
+}
+
+.levelup-card button,
+.gam-chest-modal button {
+  margin-top:22px;
+  border:0;
+  border-radius:30px;
+  padding:12px 30px;
+  font-weight:800;
+  color:#fff;
+  background:linear-gradient(135deg,var(--primary),var(--secondary));
+  cursor:pointer
+}
+
+.gam-mission-pop {
+  position:fixed;
+  left:22px;
+  bottom:22px;
+  background:#fff;
+  color:var(--text);
+  border-left:5px solid var(--primary);
+  border-radius:10px;
+  padding:14px 18px;
+  display:flex;
+  gap:13px;
+  align-items:center;
+  z-index:100001;
+  box-shadow:0 15px 40px rgba(0,0,0,.2);
+  transform:translateX(-120%);
+  opacity:0
+}
+
+.gam-mission-pop.show {
+  animation:gamMission 4s ease forwards
+}
+
+.gam-mission-pop>i {
+  font-size:25px;
+  color:var(--primary)
+}
+
+.gam-mission-pop small,
+.gam-mission-pop b,
+.gam-mission-pop span {
+  display:block
+}
+
+.gam-mission-pop small {
+  font-size:9px;
+  color:#777;
+  font-weight:800;
+  letter-spacing:1px
+}
+
+.gam-mission-pop b {
+  font-size:15px
+}
+
+.gam-mission-pop span {
+  font-size:11px;
+  color:var(--primary);
+  font-weight:800
+}
+
+.gam-chest-modal {
+  position:fixed;
+  inset:0;
+  background:rgba(10,10,20,.75);
+  z-index:100003;
+  display:flex;
+  align-items:center;
+  justify-content:center
+}
+
+.chest-card {
+  background:#fff;
+  width:min(420px,90vw);
+  border-radius:22px;
+  text-align:center;
+  padding:30px;
+  box-shadow:0 30px 90px rgba(0,0,0,.45);
+  animation:chestPop .45s both
+}
+
+.chest-box {
+  width:105px;
+  height:105px;
+  margin:0 auto 15px;
+  border-radius:25px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:45px;
+  color:#fff;
+  background:linear-gradient(135deg,var(--primary),var(--secondary));
+  box-shadow:0 15px 35px rgba(106,17,203,.3);
+  animation:chestBounce 1s ease-in-out infinite
+}
+
+.chest-card small {
+  color:#777;
+  font-weight:800;
+  letter-spacing:2px
+}
+
+.chest-card h2 {
+  color:var(--primary);
+  font-size:30px;
+  margin:4px
+}
+
+.chest-card p {
+  color:#777
+}
+
+.chest-rewards {
+  display:flex;
+  gap:12px;
+  justify-content:center;
+  margin-top:20px
+}
+
+.chest-rewards strong {
+  padding:12px 18px;
+  background:var(--light);
+  border-radius:12px;
+  color:var(--primary)
+}
+
+.gam-xp-panel {
+  margin-top:18px;
+  padding:14px;
+  border-radius:14px;
+  background:linear-gradient(135deg,rgba(106,17,203,.06),rgba(37,117,252,.08));
+  border:1px solid rgba(106,17,203,.12)
+}
+
+.gam-xp-panel-head {
+  display:flex;
+  justify-content:space-between;
+  font-weight:800;
+  color:var(--primary);
+  margin-bottom:8px
+}
+
+.gam-xp-bar {
+  height:14px;
+  background:#e9ecef;
+  border-radius:20px;
+  overflow:hidden;
+  box-shadow:inset 0 1px 3px rgba(0,0,0,.1)
+}
+
+.gam-xp-fill {
+  height:100%;
+  width:0;
+  border-radius:20px;
+  background:linear-gradient(90deg,var(--primary),var(--secondary));
+  transition:width 1s cubic-bezier(.2,.8,.2,1);
+  position:relative;
+  overflow:hidden
+}
+
+.gam-xp-fill:after {
+  content:"";
+  position:absolute;
+  inset:0;
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,.35),transparent);
+  animation:gamShine 1.8s linear infinite
+}
+
+.gam-coins {
+  display:inline-flex;
+  align-items:center;
+  gap:7px;
+  margin-top:10px;
+  padding:7px 12px;
+  border-radius:20px;
+  background:rgba(255,204,0,.12);
+  color:#9b7200;
+  font-weight:800
+}
+
+.gam-streak {
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  margin-top:8px;
+  margin-left:5px;
+  padding:7px 12px;
+  border-radius:20px;
+  background:rgba(243,156,18,.12);
+  color:#c66d00;
+  font-weight:800
+}
+
+@keyframes gamFloat {
+  0% {
+    transform:translateY(0) scale(.8);
+    opacity:0
+  }
+
+  20% {
+    opacity:1
+  }
+
+  100% {
+    transform:translateY(-65px) scale(1.08);
+    opacity:0
+  }
+}
+
+@keyframes gamAchievement {
+  0% {
+    transform:translateX(120%);
+    opacity:0
+  }
+
+  10% {
+    transform:translateX(0);
+    opacity:1
+  }
+
+  82% {
+    transform:translateX(0);
+    opacity:1
+  }
+
+  100% {
+    transform:translateX(120%);
+    opacity:0
+  }
+}
+
+@keyframes gamBadge {
+  0% {
+    transform:scale(.2) rotate(-20deg);
+    opacity:0
+  }
+
+  65% {
+    transform:scale(1.12) rotate(4deg)
+  }
+
+  100% {
+    transform:scale(1) rotate(0);
+    opacity:1
+  }
+}
+
+@keyframes gamFade {
+  from {
+    opacity:0
+  }
+
+  to {
+    opacity:1
+  }
+}
+
+@keyframes gamPulse {
+  50% {
+    transform:scale(1.08);
+    opacity:.7
+  }
+}
+
+@keyframes gamMission {
+  0% {
+    transform:translateX(-120%);
+    opacity:0
+  }
+
+  12%,80% {
+    transform:translateX(0);
+    opacity:1
+  }
+
+  100% {
+    transform:translateX(-120%);
+    opacity:0
+  }
+}
+
+@keyframes chestPop {
+  from {
+    transform:scale(.75);
+    opacity:0
+  }
+
+  to {
+    transform:scale(1);
+    opacity:1
+  }
+}
+
+@keyframes chestBounce {
+  50% {
+    transform:translateY(-7px) rotate(-2deg)
+  }
+}
+
+@keyframes gamShine {
+  to {
+    transform:translateX(250%)
+  }
+}
+
+@media(max-width:600px) {
+  .gam-achievement {
+    width:calc(100vw - 24px);
+    right:12px;
+    bottom:12px
+  }
+
+  .gam-mission-pop {
+    left:12px;
+    right:12px
+  }
+
+  .gam-achievement-icon {
+    width:58px;
+    height:58px;
+    min-width:58px
+  }
+
+  .levelup-card h2 {
+    font-size:44px
+  }
+}</style>
+</head>
+<body>
+<header>
+  <div class="header-container">
+    <a href="index.html" class="logo"><i class="fas fa-graduation-cap"></i>Aprendi<span>+</span></a>
+    <nav><ul>
+      <li><a href="index.html">Início</a></li>
+      <li><a href="estudos.html">Estudos</a></li>
+      <li><a href="perfil.html" class="active">Perfil</a></li>
+      <li><a href="contato.html">Contato</a></li>
+    </ul></nav>
+    <div class="user-actions">
+      <div class="user-points"><i class="fas fa-coins"></i><span id="user-points">1.250 XP</span></div>
+      <a href="entrar.html" class="btn btn-primary">Entrar</a>
+    </div>
+  </div>
+</header>
+
+<section class="page-header">
+  <h1>🏆 Status do Personagem</h1>
+  <p>Acompanhe seu progresso, evolução e conquistas</p>
+  <div class="head-chips">
+    <span class="chip"><i class="fas fa-calendar-day"></i> <span id="todayText"></span></span>
+    <span class="chip sync" id="syncChip"><i class="fas fa-rotate"></i> <span id="syncText">Sincronizado com Estudos</span></span>
+  </div>
+</section>
+
+<div class="main-content">
+  <aside class="character-card">
+    <div class="avatar-wrap">
+      <div class="level-ring" id="levelRing"><div class="character-avatar"><i class="fas fa-user-graduate"></i></div></div>
+      <span class="level-badge" id="levelBadge">Nv. 15</span>
+    </div>
+    <div class="name-row"><h2 class="character-name" id="charName">Estudante</h2><button class="icon-btn" onclick="editName()" title="Editar nome" aria-label="Editar nome"><i class="fas fa-pen"></i></button></div>
+    <p class="character-class" id="charTitle">Sábio em Formação</p>
+    <div class="xp-head"><span id="charLevel">Nível 15</span><span id="charXp">0/250 XP</span></div>
+    <div class="xp-bar"><div class="xp-progress" id="xpProgress"></div></div>
+    <p class="xp-text" id="xpText"></p>
+    <div class="pill-row">
+      <span class="pill coins" id="pillCoins"><i class="fas fa-coins"></i> 0</span>
+      <span class="pill fire" id="pillStreak"><i class="fas fa-fire"></i> 0 dias</span>
+    </div>
+    <div class="mini-stats">
+      <div class="mini-stat"><b id="stCorrect">0</b><span>Acertos</span></div>
+      <div class="mini-stat"><b id="stAnswered">0</b><span>Respondidas</span></div>
+      <div class="mini-stat"><b id="stAccuracy">0%</b><span>Precisão</span></div>
+      <div class="mini-stat"><b id="stCombo">0x</b><span>Melhor combo</span></div>
+    </div>
+    <a class="go-btn" href="estudos.html"><i class="fas fa-book-open"></i> Continuar estudando</a>
+  </aside>
+
+  <div class="content-area">
+
+    <section class="card" id="secPlan">
+      <h2 class="section-title"><i class="fas fa-route"></i> Seu dia de estudos</h2>
+      <p class="section-sub">O mesmo plano da aba Estudos — o que você marca aqui aparece lá, e vice-versa.</p>
+      <div class="smart-grid">
+        <div class="smart-box">
+          <span class="smart-label">PLANO DE HOJE</span>
+          <h3 id="planTitle">Monte seu ritmo</h3>
+          <div class="plan-checks">
+            <label><input type="checkbox" data-plan="focus"> Fazer 1 sessão de foco</label>
+            <label><input type="checkbox" data-plan="review"> Revisar um conteúdo</label>
+            <label><input type="checkbox" data-plan="quiz"> Responder um quiz</label>
+          </div>
+          <span class="plan-progress" id="planProgress">0 de 3 concluídos</span>
+          <a class="sbtn" href="estudos.html#foco"><i class="fas fa-bolt"></i> Começar foco</a>
+        </div>
+        <div class="smart-box">
+          <span class="smart-label">REVISÃO INTELIGENTE</span>
+          <div class="big-num" id="reviewCount">0/7<small>dias com revisão nesta semana</small></div>
+          <button class="sbtn" id="btnReview" onclick="smartMarkReview()">Marcar revisão de hoje</button>
+        </div>
+        <div class="smart-box">
+          <span class="smart-label">META SEMANAL</span>
+          <div class="week-dots" id="weekDots"></div>
+          <span class="plan-progress" id="weekCaption">0 de 4 dias concluídos</span>
+          <button class="sbtn" id="btnStudyDay" onclick="smartMarkStudyDay()">Registrar estudo de hoje</button>
+        </div>
+      </div>
+      <div class="tip"><i class="fas fa-lightbulb"></i><div><b>Dica de estudo</b><span id="tipText"></span></div><button class="icon-btn" onclick="smartNextTip()" aria-label="Próxima dica"><i class="fas fa-rotate"></i></button></div>
+    </section>
+
+    <section class="card" id="secMissions">
+      <h2 class="section-title"><i class="fas fa-tasks"></i> Missões diárias</h2>
+      <p class="section-sub">Resolva exercícios na aba Estudos para completar e ganhar XP e moedas.</p>
+      <div id="missionList"></div>
+    </section>
+
+    <div class="two-col">
+      <section class="card">
+        <h2 class="section-title"><i class="fas fa-clock-rotate-left"></i> Atividade recente</h2>
+        <p class="section-sub">Tudo que rende XP aparece aqui na hora.</p>
+        <div class="feed" id="feed"></div>
+      </section>
+      <section class="card">
+        <h2 class="section-title"><i class="fas fa-chart-simple"></i> Últimos 7 dias</h2>
+        <p class="section-sub">Questões respondidas por dia.</p>
+        <div class="wk" id="weekChart"></div>
+        <div class="legend"><span><i style="background:#d9dcf5"></i>Respondidas</span><span><i style="background:var(--primary)"></i>Acertos</span></div>
+      </section>
+    </div>
+
+    <section class="card" id="secAch">
+      <h2 class="section-title"><i class="fas fa-trophy"></i> Conquistas <span class="count" id="achCount">0/0</span></h2>
+      <p class="section-sub">Desbloqueie conquistas estudando — cada uma dá XP extra.</p>
+      <div class="ach-grid" id="achGrid"></div>
+    </section>
+
+    <section class="card" id="secSubjects">
+      <h2 class="section-title"><i class="fas fa-layer-group"></i> Desempenho por matéria</h2>
+      <p class="section-sub">Questões respondidas, acertos e conteúdos estudados em cada matéria.</p>
+      <div class="subj-grid" id="subjGrid"></div>
+    </section>
+
+    <div class="two-col">
+      <section class="card">
+        <h2 class="section-title"><i class="fas fa-gift"></i> Baús</h2>
+        <p class="section-sub">A cada 3 acertos você ganha um baú. Abra para receber XP e moedas.</p>
+        <div class="chest-grid" id="chestGrid"></div>
+      </section>
+      <section class="card">
+        <h2 class="section-title"><i class="fas fa-ranking-star"></i> Ranking da turma</h2>
+        <p class="section-sub">Suba de posição estudando.</p>
+        <div id="rankList"></div>
+      </section>
+    </div>
+
+  </div>
+</div>
+
+<footer>
+  <div class="footer-content">
+    <div class="footer-column"><h3><i class="fas fa-graduation-cap"></i> Aprendi+</h3><p>Plataforma de estudos com API e gamificação.</p></div>
+    <div class="footer-column"><h3>Navegação</h3><ul><li><a href="index.html">Início</a></li><li><a href="estudos.html">Estudos</a></li><li><a href="perfil.html">Perfil</a></li></ul></div>
+    <div class="footer-column"><h3>Contato</h3><ul><li><i class="fas fa-envelope"></i> contato@aprendi.com</li></ul></div>
+  </div>
+  <div class="copyright"><p>&copy; 2025 Aprendi+</p></div>
+</footer>
+<script>
+
+const GAME_KEY = 'aprendi_gamificacao_v2';
+const OLD_GAME_KEY = 'aprendi_gamificacao_v1';
+const GAME_VERSION = 2;
+
+const SMART_KEY = 'aprendimais_smart_study_v1';
+const CAT_KEY = 'aprendi_catalogo_v1';
+const SEEN_KEY = 'aprendi_perfil_visto_v1';
+
+const ACHIEVEMENTS = [
+  {
+    id: 'first',
+    name: 'Primeiro passo',
+    desc: 'Acerte seu primeiro exercício.',
+    icon: 'fa-play',
+    xp: 50,
+    rarity: 'Comum',
+    color: 'primary',
+    p: s => [s.stats.correct, 1]
+  },
+  {
+    id: 'five',
+    name: 'Aquecendo a mente',
+    desc: 'Acerte 5 exercícios.',
+    icon: 'fa-bullseye',
+    xp: 75,
+    rarity: 'Comum',
+    color: 'secondary',
+    p: s => [s.stats.correct, 5]
+  },
+  {
+    id: 'ten',
+    name: 'Mente afiada',
+    desc: 'Acerte 10 exercícios.',
+    icon: 'fa-star',
+    xp: 120,
+    rarity: 'Rara',
+    color: 'primary',
+    p: s => [s.stats.correct, 10]
+  },
+  {
+    id: 'twentyfive',
+    name: 'Caçador de respostas',
+    desc: 'Acerte 25 exercícios.',
+    icon: 'fa-trophy',
+    xp: 250,
+    rarity: 'Épica',
+    color: 'secondary',
+    p: s => [s.stats.correct, 25]
+  },
+  {
+    id: 'streak7',
+    name: 'Fogo aceso',
+    desc: 'Mantenha uma sequência de 7 dias.',
+    icon: 'fa-fire',
+    xp: 200,
+    rarity: 'Épica',
+    color: 'accent',
+    p: s => [s.streak, 7]
+  },
+  {
+    id: 'level10',
+    name: 'Subindo de nível',
+    desc: 'Chegue ao nível 10.',
+    icon: 'fa-level-up-alt',
+    xp: 150,
+    rarity: 'Rara',
+    color: 'primary',
+    p: s => [s.level, 10]
+  },
+  {
+    id: 'polymath',
+    name: 'Polímata',
+    desc: 'Estude 5 matérias diferentes.',
+    icon: 'fa-layer-group',
+    xp: 180,
+    rarity: 'Lendária',
+    color: 'secondary',
+    p: s => [Object.keys(s.stats.subjects).length, 5]
+  },
+  {
+    id: 'perfect',
+    name: 'Resposta perfeita',
+    desc: 'Acerte 10 exercícios seguidos.',
+    icon: 'fa-bolt',
+    xp: 300,
+    rarity: 'Lendária',
+    color: 'accent',
+    p: s => [s.stats.bestCombo, 10]
+  }
+];
+
+const DAILY_MISSIONS = [
+  {
+    id: 'daily3',
+    name: 'Aquecimento diário',
+    desc: 'Acerte 3 exercícios hoje.',
+    icon: 'fa-bullseye',
+    target: 3,
+    type: 'correct',
+    rewardXP: 80,
+    rewardCoins: 25
+  },
+  {
+    id: 'daily5',
+    name: 'Sessão focada',
+    desc: 'Resolva 5 exercícios hoje.',
+    icon: 'fa-book-open',
+    target: 5,
+    type: 'answered',
+    rewardXP: 110,
+    rewardCoins: 35
+  },
+  {
+    id: 'daily2subjects',
+    name: 'Passeio pelo conhecimento',
+    desc: 'Estude 2 matérias hoje.',
+    icon: 'fa-compass',
+    target: 2,
+    type: 'subjects',
+    rewardXP: 100,
+    rewardCoins: 30
+  }
+];
+
+const RANKING_BOTS = [
+  {
+    name: 'Ana',
+    base: 2840
+  },
+  {
+    name: 'Lucas',
+    base: 2510
+  },
+  {
+    name: 'Beatriz',
+    base: 2210
+  },
+  {
+    name: 'Rafael',
+    base: 1980
+  },
+  {
+    name: 'Marina',
+    base: 1760
+  },
+  {
+    name: 'Gabriel',
+    base: 1510
+  },
+  {
+    name: 'Sofia',
+    base: 1320
+  }
+];
+
+const SUBJ_FALLBACK = {
+  matematica: {
+    nome: 'Matemática',
+    icone: 'fa-square-root-alt',
+    cor: '#6a11cb'
+  },
+  portugues: {
+    nome: 'Português',
+    icone: 'fa-book',
+    cor: '#2575fc'
+  },
+  historia: {
+    nome: 'História',
+    icone: 'fa-landmark',
+    cor: '#f39c12'
+  },
+  geografia: {
+    nome: 'Geografia',
+    icone: 'fa-globe-americas',
+    cor: '#2ecc71'
+  },
+  biologia: {
+    nome: 'Biologia',
+    icone: 'fa-dna',
+    cor: '#e74c3c'
+  },
+  fisica: {
+    nome: 'Física',
+    icone: 'fa-atom',
+    cor: '#3498db'
+  },
+  quimica: {
+    nome: 'Química',
+    icone: 'fa-flask',
+    cor: '#9b59b6'
+  },
+  ingles: {
+    nome: 'Inglês',
+    icone: 'fa-language',
+    cor: '#e67e22'
+  }
+};
+
+const SMART_TIPS = [
+  'Tente explicar o assunto com suas próprias palavras antes de olhar o resumo. Isso ajuda a perceber o que realmente entendeu.',
+  'Estude por blocos curtos: foco total durante a sessão e uma pausa longe da tela depois.',
+  'Errar no quiz é informação útil. Volte ao trecho que gerou dúvida e tente novamente depois.',
+  'Antes de encerrar, escreva três coisas que aprendeu sem consultar o material.',
+  'Intercale matérias diferentes ao longo da semana para manter a prática variada.',
+  'Não precisa fazer tudo hoje. Um pequeno avanço repetido vale mais que uma maratona ocasional.'
+];
+
+const FEED_ICONS = {
+  xp: 'fa-bolt',
+  achievement: 'fa-trophy',
+  mission: 'fa-bullseye',
+  level: 'fa-arrow-up',
+  chest: 'fa-gift',
+  study: 'fa-book-open'
+};
+
+function defaultGame() {
+  return {
+    version: GAME_VERSION,
+    name: 'Estudante',
+    xp: 1250,
+    level: 15,
+    coins: 320,
+    streak: 4,
+    bestStreak: 4,
+    lastStudyDay: null,
+    stats: {
+      answered: 0,
+      correct: 0,
+      wrong: 0,
+      subjects: {},
+      combo: 0,
+      bestCombo: 0,
+      byDay: {}
+    },
+    unlocked: [],
+    history: [],
+    claimedMissions: [],
+    chests: {
+      small: 0,
+      medium: 0,
+      large: 0
+    },
+    lastChestAt: null,
+    notifications: [],
+    log: []
+  };
+}
+
+function migrateGame() {
+  let s = null;
+
+  try {
+    s = JSON.parse(localStorage.getItem(GAME_KEY) || 'null');
+  } catch (e) {}
+
+  if (s && s.version === GAME_VERSION) {
+    const d = defaultGame();
+
+    s.stats = Object.assign(d.stats, s.stats || {});
+    s.stats.byDay = s.stats.byDay || {};
+    s.stats.subjects = s.stats.subjects || {};
+    s.chests = Object.assign(d.chests, s.chests || {});
+
+    ['unlocked', 'history', 'claimedMissions', 'log'].forEach(k => {
+      if (!Array.isArray(s[k])) {
+        s[k] = [];
+      }
+    });
+
+    return s;
+  }
+
+  let old = null;
+
+  try {
+    old = JSON.parse(localStorage.getItem(OLD_GAME_KEY) || 'null');
+  } catch (e) {}
+
+  if (old) {
+    const n = defaultGame();
+
+    Object.assign(n, {
+      name: old.name || n.name,
+      xp: old.xp || n.xp,
+      level: old.level || n.level,
+      coins: old.coins || n.coins,
+      streak: old.streak || n.streak,
+      bestStreak: old.bestStreak || n.bestStreak,
+      lastStudyDay: old.lastStudyDay || null,
+      unlocked: old.unlocked || [],
+      history: old.history || []
+    });
+
+    n.stats = Object.assign(n.stats, old.stats || {});
+    n.stats.subjects = n.stats.subjects || {};
+
+    return n;
+  }
+
+  return defaultGame();
+}
+
+let game = migrateGame();
+
+function snapshot() {
+  return [GAME_KEY, SMART_KEY, CAT_KEY]
+    .map(k => localStorage.getItem(k))
+    .join('|');
+}
+
+let lastRaw = snapshot();
+let lastDay = '';
+
+function saveGame() {
+  localStorage.setItem(GAME_KEY, JSON.stringify(game));
+
+  localStorage.setItem(
+    'usuario',
+    JSON.stringify({
+      xp: game.xp,
+      nivel: game.level,
+      nome: game.name,
+      moedas: game.coins
+    })
+  );
+
+  lastRaw = snapshot();
+}
+
+const esc = s =>
+  String(s).replace(/[&<>"']/g, c => ({
+    '&': '&amp;',
+    '<': '&lt;',
+    '>': '&gt;',
+    '"': '&quot;',
+    "'": '&#39;'
+  })[c]);
+
+const $ = id => document.getElementById(id);
+
+function dayKey(d) {
+  return (
+    d.getFullYear() +
+    '-' +
+    String(d.getMonth() + 1).padStart(2, '0') +
+    '-' +
+    String(d.getDate()).padStart(2, '0')
+  );
+}
+
+function todayKey() {
+  return dayKey(new Date());
+}
+
+function levelInfo(xp) {
+  const base = 1250;
+  const level = 15 + Math.floor(Math.max(0, xp - base) / 250);
+  const current = xp - (base + (level - 15) * 250);
+
+  return {
+    level,
+    current: Math.max(0, current),
+    needed: 250,
+    percent: Math.min(100, Math.max(0, current) / 250 * 100)
+  };
+}
+
+function titleFor(l) {
+  return l >= 28
+    ? 'Mestre do Saber'
+    : l >= 22
+      ? 'Mente Brilhante'
+      : l >= 18
+        ? 'Estudioso Dedicado'
+        : 'Sábio em Formação';
+}
+
+function missionState(m) {
+  const day = game.stats.byDay[todayKey()] || {
+    answered: 0,
+    correct: 0,
+    subjects: {}
+  };
+
+  let v = 0;
+
+  if (m.type === 'correct') {
+    v = day.correct || 0;
+  }
+
+  if (m.type === 'answered') {
+    v = day.answered || 0;
+  }
+
+  if (m.type === 'subjects') {
+    v = Object.keys(day.subjects || {}).length;
+  }
+
+  return {
+    value: v,
+    target: m.target,
+    done: v >= m.target,
+    claimed: game.claimedMissions.includes(todayKey() + ':' + m.id)
+  };
+}
+
+function fmtWhen(t) {
+  const d = new Date(t);
+  const hh = d.toLocaleTimeString('pt-BR', {
+    hour: '2-digit',
+    minute: '2-digit'
+  });
+
+  const k = dayKey(d);
+  const y = new Date();
+
+  y.setDate(y.getDate() - 1);
+
+  if (k === todayKey()) {
+    return 'Hoje, ' + hh;
+  }
+
+  if (k === dayKey(y)) {
+    return 'Ontem, ' + hh;
+  }
+
+  return (
+    d.toLocaleDateString('pt-BR', {
+      day: '2-digit',
+      month: '2-digit'
+    }) +
+    ', ' +
+    hh
+  );
+}
+
+function catalog() {
+  try {
+    return Object.assign(
+      {},
+      SUBJ_FALLBACK,
+      JSON.parse(localStorage.getItem(CAT_KEY)) || {}
+    );
+  } catch (e) {
+    return SUBJ_FALLBACK;
+  }
+}
+
+function smartLoad() {
+  try {
+    const d = JSON.parse(localStorage.getItem(SMART_KEY)) || {};
+
+    return {
+      plans: d.plans || {},
+      reviewDays: d.reviewDays || [],
+      studyDays: d.studyDays || [],
+      tip: d.tip || 0
+    };
+  } catch (e) {
+    return {
+      plans: {},
+      reviewDays: [],
+      studyDays: [],
+      tip: 0
+    };
+  }
+}
+
+function smartSave(d) {
+  localStorage.setItem(SMART_KEY, JSON.stringify(d));
+  lastRaw = snapshot();
+}
+
+function smartWeek() {
+  const now = new Date();
+  const day = (now.getDay() + 6) % 7;
+  const mon = new Date(now);
+
+  mon.setDate(now.getDate() - day);
+
+  return Array.from({ length: 7 }, (_, i) => {
+    const d = new Date(mon);
+
+    d.setDate(mon.getDate() + i);
+
+    return dayKey(d);
+  });
+}
+
+function smartStudied(d, x) {
+  return (
+    d.studyDays.includes(x) ||
+    !!(game.stats.byDay[x] && game.stats.byDay[x].answered > 0)
+  );
+}
+
+function smartPlanCheck(key, val) {
+  const d = smartLoad();
+  const t = todayKey();
+
+  d.plans[t] = d.plans[t] || {};
+  d.plans[t][key] = val;
+
+  smartSave(d);
+  renderPlan();
+}
+
+function smartMarkReview() {
+  const d = smartLoad();
+  const t = todayKey();
+
+  if (!d.reviewDays.includes(t)) {
+    d.reviewDays.push(t);
+  }
+
+  d.plans[t] = d.plans[t] || {};
+  d.plans[t].review = true;
+
+  smartSave(d);
+  renderPlan();
+}
+
+function smartMarkStudyDay() {
+  const d = smartLoad();
+  const t = todayKey();
+
+  if (!d.studyDays.includes(t)) {
+    d.studyDays.push(t);
+  }
+
+  smartSave(d);
+  renderPlan();
+}
+
+function smartNextTip() {
+  const d = smartLoad();
+
+  d.tip = (d.tip + 1) % SMART_TIPS.length;
+
+  smartSave(d);
+  renderPlan();
+}
+
+document.addEventListener('change', e => {
+  if (e.target.matches('[data-plan]')) {
+    smartPlanCheck(e.target.dataset.plan, e.target.checked);
+  }
+});
+
+function playSound(kind = 'achievement') {
+  try {
+    const C = window.AudioContext || window.webkitAudioContext;
+
+    if (!C) {
+      return;
+    }
+
+    const c = new C();
+    const t = c.currentTime;
+
+    const notes =
+      kind === 'level'
+        ? [261.6, 329.6, 392, 523.3, 659.3, 783.99]
+        : kind === 'coin'
+          ? [659.3, 987.8]
+          : [523.25, 659.25, 783.99, 1046.5];
+
+    notes.forEach((f, i) => {
+      const o = c.createOscillator();
+      const g = c.createGain();
+      const d = i * 0.1;
+
+      o.type = 'sine';
+      o.frequency.value = f;
+
+      g.gain.setValueAtTime(0.0001, t + d);
+      g.gain.exponentialRampToValueAtTime(0.12, t + d + 0.02);
+      g.gain.exponentialRampToValueAtTime(0.0001, t + d + 0.28);
+
+      o.connect(g);
+      g.connect(c.destination);
+
+      o.start(t + d);
+      o.stop(t + d + 0.3);
+    });
+
+    setTimeout(() => c.close(), 1200);
+  } catch (e) {}
+}
+
+function showXP(n) {
+  if (!n) {
+    return;
+  }
+
+  const e = document.createElement('div');
+
+  e.className = 'gam-xp-float';
+  e.innerHTML = `<i class="fas fa-bolt"></i> +${n} XP`;
+
+  document.body.appendChild(e);
+  setTimeout(() => e.remove(), 1400);
+}
+
+function showCoins(n) {
+  if (!n) {
+    return;
+  }
+
+  const e = document.createElement('div');
+
+  e.className = 'gam-coin-float';
+  e.innerHTML = `<i class="fas fa-coins"></i> +${n}`;
+
+  document.body.appendChild(e);
+  playSound('coin');
+  setTimeout(() => e.remove(), 1400);
+}
+
+function showAchievement(a) {
+  const old = document.querySelector('.gam-achievement');
+
+  if (old) {
+    old.remove();
+  }
+
+  const e = document.createElement('div');
+
+  e.className = 'gam-achievement';
+  e.innerHTML = `
+    <div class="gam-achievement-icon ${a.color}">
+      <i class="fas ${a.icon}"></i>
+    </div>
+    <div class="gam-achievement-copy">
+      <small>CONQUISTA DESBLOQUEADA</small>
+      <b>${esc(a.name)}</b>
+      <span>${esc(a.desc)}</span>
+      <em>${a.rarity} • +${a.xp} XP</em>
+    </div>
+  `;
+
+  document.body.appendChild(e);
+  requestAnimationFrame(() => e.classList.add('show'));
+  playSound();
+  setTimeout(() => e.remove(), 6200);
+}
+
+function showPop(icon, label, title, sub) {
+  const e = document.createElement('div');
+
+  e.className = 'gam-mission-pop';
+  e.innerHTML = `
+    <i class="fas ${icon}"></i>
+    <div>
+      <small>${label}</small>
+      <b>${esc(title)}</b>
+      <span>${esc(sub || '')}</span>
+    </div>
+  `;
+
+  document.body.appendChild(e);
+  requestAnimationFrame(() => e.classList.add('show'));
+  setTimeout(() => e.remove(), 4000);
+}
+
+function showChest(r) {
+  const e = document.createElement('div');
+
+  e.className = 'gam-chest-modal';
+  e.innerHTML = `
+    <div class="chest-card">
+      <div class="chest-box">
+        <i class="fas fa-gift"></i>
+      </div>
+      <small>BAÚ ABERTO</small>
+      <h2>Recompensa!</h2>
+      <p>Você encontrou uma recompensa especial.</p>
+      <div class="chest-rewards">
+        <strong>+${r.xp} XP</strong>
+        <strong>
+          <i class="fas fa-coins"></i> +${r.coins}
+        </strong>
+      </div>
+      <button onclick="this.closest('.gam-chest-modal').remove()">
+        COLETAR
+      </button>
+    </div>
+  `;
+
+  document.body.appendChild(e);
+  playSound();
+}
+
+function editName() {
+  const n = prompt('Como você quer ser chamado(a)?', game.name);
+
+  if (n && n.trim()) {
+    game.name = n.trim().slice(0, 24);
+    saveGame();
+    render();
+  }
+}
+
+function openChest(type) {
+  if (!game.chests[type]) {
+    return;
+  }
+
+  const r = {
+    small: { xp: 35, coins: 15 },
+    medium: { xp: 90, coins: 40 },
+    large: { xp: 180, coins: 85 }
+  }[type];
+
+  game.chests[type]--;
+  game.xp += r.xp;
+  game.coins += r.coins;
+  game.level = levelInfo(game.xp).level;
+  game.log = game.log || [];
+
+  game.log.unshift({
+    t: Date.now(),
+    type: 'chest',
+    text:
+      'Abriu um baú ' +
+      {
+        small: 'pequeno',
+        medium: 'médio',
+        large: 'grande'
+      }[type],
+    xp: r.xp
+  });
+
+  game.log.length = Math.min(game.log.length, 40);
+
+  saveGame();
+  render();
+  showXP(r.xp);
+  showCoins(r.coins);
+  showChest(r);
+}
+
+let fresh = new Set();
+
+function renderHeader() {
+  const s = new Date().toLocaleDateString('pt-BR', {
+    weekday: 'long',
+    day: '2-digit',
+    month: 'long',
+    year: 'numeric'
+  });
+
+  $('todayText').textContent = s.charAt(0).toUpperCase() + s.slice(1);
+  $('user-points').textContent = game.xp.toLocaleString('pt-BR') + ' XP';
+}
+
+function renderCard() {
+  const i = levelInfo(game.xp);
+  const st = game.stats;
+
+  $('charName').textContent = game.name;
+  $('charTitle').textContent = titleFor(game.level);
+  $('charLevel').textContent = 'Nível ' + game.level;
+  $('levelBadge').textContent = 'Nv. ' + game.level;
+  $('charXp').textContent = `${Math.round(i.current)}/${i.needed} XP`;
+
+  $('levelRing').style.setProperty('--p', i.percent + '%');
+  $('xpProgress').style.width = i.percent + '%';
+
+  $('xpText').textContent =
+    `Faltam ${Math.round(i.needed - i.current)} XP para o nível ` +
+    `${game.level + 1} • ${game.xp.toLocaleString('pt-BR')} XP no total`;
+
+  $('pillCoins').innerHTML =
+    `<i class="fas fa-coins"></i> ${game.coins.toLocaleString('pt-BR')}`;
+
+  $('pillStreak').innerHTML =
+    `<i class="fas fa-fire"></i> ${game.streak} ` +
+    `${game.streak === 1 ? 'dia' : 'dias'}`;
+
+  $('pillStreak').title =
+    'Melhor sequência: ' + game.bestStreak + ' dias';
+
+  $('stCorrect').textContent = st.correct;
+  $('stAnswered').textContent = st.answered;
+
+  $('stAccuracy').textContent = st.answered
+    ? Math.round(st.correct / st.answered * 100) + '%'
+    : '0%';
+
+  $('stCombo').textContent = st.bestCombo + 'x';
+}
+
+function renderPlan() {
+  const d = smartLoad();
+  const t = todayKey();
+  const plan = d.plans[t] || {};
+
+  document.querySelectorAll('[data-plan]').forEach(el => {
+    el.checked = !!plan[el.dataset.plan];
+  });
+
+  const done = ['focus', 'review', 'quiz'].filter(k => plan[k]).length;
+
+  $('planProgress').textContent = `${done} de 3 concluídos`;
+  $('planTitle').textContent =
+    done === 3
+      ? 'Plano concluído. Boa!'
+      : done
+        ? 'Continue no seu ritmo'
+        : 'Monte seu ritmo';
+
+  const week = smartWeek();
+  const reviews = week.filter(x => d.reviewDays.includes(x)).length;
+  const studies = week.filter(x => smartStudied(d, x)).length;
+
+  $('reviewCount').innerHTML =
+    `${reviews}/7<small>dias com revisão nesta semana</small>`;
+
+  $('btnReview').disabled = d.reviewDays.includes(t);
+  $('btnReview').textContent = d.reviewDays.includes(t)
+    ? 'Revisão de hoje marcada ✓'
+    : 'Marcar revisão de hoje';
+
+  $('weekDots').innerHTML = week
+    .map((x, i) => `
+      <div class="week-dot ${smartStudied(d, x) ? 'done' : ''} ${x === t ? 'today' : ''}">
+        ${['S', 'T', 'Q', 'Q', 'S', 'S', 'D'][i]}
+      </div>
+    `)
+    .join('');
+
+  $('weekCaption').textContent =
+    `${studies} de 4 dias concluídos` +
+    `${studies >= 4 ? ' • meta batida! 🎉' : ''}`;
+
+  const hoje = smartStudied(d, t);
+
+  $('btnStudyDay').disabled = hoje;
+  $('btnStudyDay').textContent = hoje
+    ? 'Estudo de hoje registrado ✓'
+    : 'Registrar estudo de hoje';
+
+  $('tipText').textContent = SMART_TIPS[d.tip % SMART_TIPS.length];
+}
+
+function renderMissions() {
+  $('missionList').innerHTML = DAILY_MISSIONS
+    .map(m => {
+      const s = missionState(m);
+
+      return `
+        <div class="quest-item ${s.claimed ? 'quest-complete' : ''}">
+          <div class="quest-icon">
+            <i class="fas ${m.icon}"></i>
+          </div>
+          <div class="quest-info">
+            <div class="quest-name">
+              ${m.name} ${s.claimed ? '✓' : ''}
+            </div>
+            <div class="quest-desc">${m.desc}</div>
+            <div class="quest-reward">
+              Recompensa: ${m.rewardXP} XP + ${m.rewardCoins} moedas
+            </div>
+            <div class="mini-bar">
+              <span style="width:${Math.min(100, s.value / s.target * 100)}%"></span>
+            </div>
+          </div>
+          <div class="quest-progress">
+            ${Math.min(s.value, s.target)}/${s.target}
+          </div>
+        </div>
+      `;
+    })
+    .join('');
+}
+
+function renderActivity() {
+  let items = (game.log || []).slice(0, 12);
+
+  if (!items.length) {
+    items = game.history
+      .filter(h => h.correct)
+      .slice(-8)
+      .reverse()
+      .map(h => ({
+        t: Date.parse(h.at) || Date.now(),
+        type: 'xp',
+        text:
+          'Acertou uma questão de ' +
+          ((catalog()[h.materiaId] || {}).nome || h.materiaId),
+        xp: h.pontos
+      }));
+  }
+
+  $('feed').innerHTML = items.length
+    ? items
+        .map(it => `
+          <div class="feed-item">
+            <div class="feed-icon ${it.type}">
+              <i class="fas ${FEED_ICONS[it.type] || 'fa-star'}"></i>
+            </div>
+            <div class="feed-text">
+              ${esc(it.text)}
+              <small>${fmtWhen(it.t)}</small>
+            </div>
+            ${it.xp ? `<span class="feed-xp">+${it.xp} XP</span>` : ''}
+          </div>
+        `)
+        .join('')
+    : `
+      <div class="empty">
+        <i class="fas fa-seedling"></i>
+        <br>
+        Nada por aqui ainda.
+        <br>
+        Responda um exercício na aba Estudos para começar!
+      </div>
+    `;
+
+  const rows = [];
+
+  for (let i = 6; i >= 0; i--) {
+    const d = new Date();
+
+    d.setDate(d.getDate() - i);
+
+    const v = game.stats.byDay[dayKey(d)] || {};
+
+    rows.push({
+      d,
+      a: v.answered || 0,
+      c: v.correct || 0,
+      today: i === 0
+    });
+  }
+
+  const max = Math.max(4, ...rows.map(r => r.a));
+
+  $('weekChart').innerHTML = rows
+    .map(r => `
+      <div
+        class="wk-col ${r.today ? 'today' : ''}"
+        title="${r.a} respondidas • ${r.c} acertos"
+      >
+        <b>${r.a}</b>
+        <div class="wk-bars">
+          <span class="wk-a" style="height:${r.a / max * 100}%">
+            <span class="wk-c" style="height:${r.a ? r.c / r.a * 100 : 0}%"></span>
+          </span>
+        </div>
+        <small>
+          ${r.d.toLocaleDateString('pt-BR', { weekday: 'short' }).replace('.', '')}
+        </small>
+      </div>
+    `)
+    .join('');
+}
+
+function renderAch() {
+  const on = ACHIEVEMENTS.filter(a => game.unlocked.includes(a.id)).length;
+
+  $('achCount').textContent = `${on}/${ACHIEVEMENTS.length}`;
+
+  $('achGrid').innerHTML = ACHIEVEMENTS
+    .map(a => {
+      const u = game.unlocked.includes(a.id);
+      const [cur, max] = a.p(game);
+      const pct = u ? 100 : Math.min(100, cur / max * 100);
+
+      return `
+        <div class="ach ${u ? 'on' : 'locked'}">
+          ${u && fresh.has(a.id) ? '<span class="new-tag">NOVA</span>' : ''}
+          <div class="ach-ico ${a.color === 'accent' ? 'accent' : ''}">
+            <i class="fas ${a.icon}"></i>
+          </div>
+          <h4>${a.name}</h4>
+          <p>${a.desc}</p>
+          <div class="mini-bar">
+            <span style="width:${pct}%"></span>
+          </div>
+          <div class="meta">
+            <span>${u ? 'Desbloqueada' : Math.min(cur, max) + '/' + max}</span>
+            <span class="r-${a.rarity}">
+              ${a.rarity} • +${a.xp} XP
+            </span>
+          </div>
+        </div>
+      `;
+    })
+    .join('');
+}
+
+function renderSubjects() {
+  const cat = catalog();
+  const studied = {};
+
+  for (let i = 0; i < localStorage.length; i++) {
+    const k = localStorage.key(i);
+
+    if (k && k.startsWith('study:')) {
+      const p = k.split(':');
+
+      (studied[p[1]] = studied[p[1]] || new Set()).add(p[2]);
+    }
+  }
+
+  $('subjGrid').innerHTML = Object.entries(cat)
+    .map(([id, m]) => {
+      const h = game.history.filter(x => x.materiaId === id);
+      const ans = h.length;
+      const ok = h.filter(x => x.correct).length;
+      const acc = ans ? Math.round(ok / ans * 100) : 0;
+      const tot = m.total || 0;
+      const st = studied[id] ? studied[id].size : 0;
+      const pct = tot ? Math.min(100, ans / tot * 100) : acc;
+
+      return `
+        <div class="subj" style="--c:${m.cor}">
+          <div class="subj-head">
+            <i class="fas ${m.icone}"></i>
+            <b>${m.nome}</b>
+            <span>${ans ? acc + '%' : '—'}</span>
+          </div>
+          <div class="mini-bar">
+            <span style="width:${pct}%"></span>
+          </div>
+          <small>
+            ${ans}${tot ? '/' + tot : ''} questões respondidas • ${ok} acertos
+          </small>
+          <small>
+            ${st}${m.resumos ? '/' + m.resumos : ''} conteúdos estudados
+          </small>
+        </div>
+      `;
+    })
+    .join('');
+}
+
+function renderChests() {
+  $('chestGrid').innerHTML = [
+    ['small', 'Pequeno', 'fa-box'],
+    ['medium', 'Médio', 'fa-gift'],
+    ['large', 'Épico', 'fa-box-open']
+  ]
+    .map(([id, n, ic]) => `
+      <button
+        class="chest-item ${game.chests[id] ? 'available' : ''}"
+        onclick="openChest('${id}')"
+        ${game.chests[id] ? '' : 'disabled'}
+      >
+        <i class="fas ${ic}"></i>
+        <span>${n}</span>
+     </script>
+</body>
+</html>
